@@ -1,0 +1,338 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kahfi's Sanctuary</title>
+<meta name="description" content="Kahfi's Sanctuary — an index of five hobby trackers, the numbers on each, and what has been on them lately.">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico" sizes="any">
+
+<!--
+THESIS: An index, not a scene. Five trackers set as one quiet list where the
+numbers and the covers are the only ornament. Refuses the card grid, and refuses
+decoration standing in for content.
+OWN-WORLD: A 16:5 banner masked to nothing at its foot, then near-white paper
+and a single deep green. One type family at four fixed steps, hairline rules,
+generous air. Numbers large and light in tabular figures; five poster slots per
+entry, empty ones kept as quiet plates rather than hidden.
+STORY: A friend reads down the list, sees what Kahfi watches, reads and plays,
+recognises a few covers, and can step to any profile from its line.
+FIRST VIEWPORT: The banner runs full width and dissolves into the page. Under
+it a single measured column: title, one line of intro, then the list.
+FORM: The reading index. Chosen from the safer register at the user's request,
+after two committed worlds were declined. Seed key 7f751cdc.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the
+finish review, the verdict, docs/DESIGN.md, and every shipping raster carrying its
+provenance.
+ANTISLOP DIALS: ENERGY 1 / RHYTHM 1 / MOTION 1.
+NUMBERS: hand-kept in content.json. The page never claims they are live.
+-->
+
+<a class="skip-link" href="#index">Skip to the list</a>
+
+<div class="backdrop" aria-hidden="true">
+  <video class="backdrop__media" id="backdrop-media"
+         autoplay muted loop playsinline disablepictureinpicture
+         poster="media/art-backdrop-poster.webp">
+    <source id="backdrop-webm" src="media/art-backdrop.webm" type="video/webm">
+    <source id="backdrop-mp4" src="media/art-backdrop.mp4" type="video/mp4">
+  </video>
+</div>
+
+<div class="page">
+  <header class="masthead">
+    <h1 class="masthead__title" id="title">Kahfi&rsquo;s Sanctuary</h1>
+    <p class="masthead__note" id="intro"></p>
+  </header>
+
+  <main>
+    <h2 class="sr-only">The trackers</h2>
+    <ol class="index" id="index" aria-busy="true">
+      <li class="state"><p class="state__line">Reading the list&hellip;</p></li>
+    </ol>
+  </main>
+
+  <footer class="colophon">
+    <p class="colophon__note" id="note" hidden></p>
+    <p class="colophon__credit" id="credit" hidden></p>
+    <p>
+      <span id="byline">Kept by Kahfi R.</span> The numbers are entered by hand in
+      <a id="repo" href="https://github.com/nrkahfirhmd/personal-sanctuary">content.json</a>
+      and carry the date they were last touched, so they are as current as the last time I sat down with
+      them, not as current as the profiles themselves.
+    </p>
+  </footer>
+</div>
+
+<!-- A copy of content.json, so the page still reads when it is opened straight
+     off the disk, where fetch() cannot see a sibling file.
+     scripts/bake.mjs rewrites this block; do not hand-edit it. -->
+<script type="application/json" id="baked-data">
+{
+  "_README": [
+    "This is the only file you edit. Everything on the page comes from here.",
+    "",
+    "updated  — the date shown under each entry. Bump it when you change numbers.",
+    "stats    — max 3 per gateway. Fewer is fine. value is shown large, label small.",
+    "           Write value exactly as it should appear, separators included: \"2,324\".",
+    "posters  — max 5 per gateway. Direct image URLs. Fewer is fine; empty slots",
+    "           render as quiet placeholders rather than being hidden.",
+    "",
+    "backdrop — swap the art by dropping new files in media/ and pointing these",
+    "           paths at them. credit is the artist and is shown in the colophon.",
+    "",
+    "After editing, run `node scripts/bake.mjs` so the page still reads when it",
+    "is opened straight off the disk."
+  ],
+
+  "site": {
+    "name": "Kahfi's Sanctuary",
+    "title": "Kahfi's Sanctuary",
+    "intro": "I enjoy art, a lot.",
+    "byline": "Kept by Kahfi R.",
+    "repo": "https://github.com/nrkahfirhmd/personal-sanctuary"
+  },
+
+  "backdrop": {
+    "webm": "media/art-backdrop.webm",
+    "mp4": "media/art-backdrop.mp4",
+    "poster": "media/art-backdrop-poster.webp",
+    "credit": "Tilixia Summer",
+    "creditNote": "Backdrop art by"
+  },
+
+  "gateways": [
+    {
+      "hobby": "Anime",
+      "name": "AniList",
+      "username": "Sakyta",
+      "url": "https://anilist.co/user/Sakyta/",
+      "updated": "2026-09-12",
+      "stats": [
+        { "value": "135", "label": "anime completed" },
+        { "value": "85.9", "label": "mean score" },
+        { "value": "2,324", "label": "episodes" }
+      ],
+      "posters": [
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx113290-zsH3Ni7M7STm.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx114121-vxWVgIBlBjox.png",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx107913-kM9fv7X13cXe.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx107912-pLrOL1AzEIEt.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx140960-Kb6R5nYQfjmP.jpg"
+      ]
+    },
+    {
+      "hobby": "TV",
+      "name": "Serializd",
+      "username": "Sakyta",
+      "url": "https://serializd.com/user/Sakyta/profile",
+      "updated": null,
+      "stats": [],
+      "posters": []
+    },
+    {
+      "hobby": "Books",
+      "name": "StoryGraph",
+      "username": "firanda",
+      "url": "https://app.thestorygraph.com/profile/firanda",
+      "updated": null,
+      "stats": [],
+      "posters": []
+    },
+    {
+      "hobby": "Films",
+      "name": "Letterboxd",
+      "username": "firanda",
+      "url": "https://letterboxd.com/firanda/",
+      "updated": "2026-09-12",
+      "stats": [
+        { "value": "110", "label": "films watched" },
+        { "value": "12", "label": "this year" }
+      ],
+      "posters": []
+    },
+    {
+      "hobby": "Games",
+      "name": "Backloggd",
+      "username": "Firanda",
+      "url": "https://backloggd.com/u/Firanda/",
+      "updated": "2026-09-12",
+      "stats": [
+        { "value": "27", "label": "games played" },
+        { "value": "5", "label": "played in 2026" },
+        { "value": "0", "label": "in the backlog" }
+      ],
+      "posters": [
+        "https://images.igdb.com/igdb/image/upload/t_cover_big/coclf1.jpg",
+        "https://images.igdb.com/igdb/image/upload/t_cover_big/cobg1l.jpg",
+        "https://images.igdb.com/igdb/image/upload/t_cover_big/co44mb.jpg",
+        "https://images.igdb.com/igdb/image/upload/t_cover_big/cob8gm.jpg",
+        "https://images.igdb.com/igdb/image/upload/t_cover_big/co87df.jpg"
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const POSTER_SLOTS = 5;
+  const STAT_SLOTS = 3;
+
+  const list = document.getElementById('index');
+  const note = document.getElementById('note');
+  const credit = document.getElementById('credit');
+
+  const pretty = (iso) => {
+    const d = new Date(`${iso}T00:00:00Z`);
+    return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+  };
+
+  const el = (tag, className, text) => {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text != null) node.textContent = text;
+    return node;
+  };
+
+  function buildEntry(entry) {
+    const stats = (entry.stats ?? []).slice(0, STAT_SLOTS);
+    const posters = (entry.posters ?? []).slice(0, POSTER_SLOTS);
+
+    const item = el('li', 'entry');
+
+    const link = el('a', 'entry__link');
+    link.href = entry.url;
+    link.rel = 'me noopener';
+
+    const head = el('div', 'entry__head');
+    head.append(el('h3', 'entry__hobby', entry.hobby));
+    const meta = el('p', 'entry__meta');
+    meta.append(el('span', null, entry.name), el('span', 'entry__user', entry.username));
+    head.append(meta);
+    head.append(
+      el('p', 'entry__when', entry.updated ? `updated ${pretty(entry.updated)}` : 'nothing entered yet')
+    );
+    link.append(head);
+
+    if (stats.length) {
+      const dl = el('dl', 'entry__stats');
+      for (const { value, label } of stats) {
+        const pair = el('div', 'stat');
+        // Value before label in the source so a screen reader reaches the number
+        // first; the visual order is reversed in CSS.
+        pair.append(el('dd', 'stat__value', value), el('dt', 'stat__label', label));
+        dl.append(pair);
+      }
+      link.append(dl);
+    } else {
+      link.append(el('p', 'entry__none', 'no numbers entered yet'));
+    }
+
+    // Five slots, always. An empty slot is drawn as a plate rather than hidden,
+    // so the row keeps its rhythm whether one cover is filled in or five.
+    const strip = el('ul', 'posters');
+    for (let i = 0; i < POSTER_SLOTS; i += 1) {
+      const slot = el('li', 'poster');
+      const url = posters[i];
+      if (url) {
+        const img = el('img', 'poster__img');
+        img.src = url;
+        img.alt = '';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        // An image that will not load falls back to the empty plate rather than
+        // leaving a broken-image glyph in the strip.
+        img.addEventListener('error', () => slot.classList.add('poster--empty'), { once: true });
+        slot.append(img);
+      } else {
+        slot.classList.add('poster--empty');
+      }
+      strip.append(slot);
+    }
+    link.append(strip);
+
+    item.append(link);
+    return item;
+  }
+
+  function renderState(line, why, onRetry) {
+    const item = el('li', 'state');
+    item.append(el('p', 'state__line', line));
+    if (why) item.append(el('p', 'state__why', why));
+    if (onRetry) {
+      const retry = el('button', 'state__retry', 'Try again');
+      retry.type = 'button';
+      retry.addEventListener('click', onRetry);
+      item.append(retry);
+    }
+    list.replaceChildren(item);
+  }
+
+  function applySite(content) {
+    const site = content.site ?? {};
+    if (site.title) document.getElementById('title').textContent = site.title;
+    document.getElementById('intro').textContent = site.intro ?? '';
+    if (site.byline) document.getElementById('byline').textContent = site.byline;
+    if (site.repo) document.getElementById('repo').href = site.repo;
+
+    const b = content.backdrop ?? {};
+    if (b.webm) document.getElementById('backdrop-webm').src = b.webm;
+    if (b.mp4) document.getElementById('backdrop-mp4').src = b.mp4;
+    if (b.poster) {
+      document.getElementById('backdrop-media').poster = b.poster;
+      // The reduced-motion still is painted by CSS, so the path has to reach it.
+      document.documentElement.style.setProperty('--backdrop-poster', `url("${b.poster}")`);
+    }
+    // Someone drew this. Credit them on the page, not only in the JSON.
+    credit.hidden = !b.credit;
+    if (b.credit) credit.textContent = `${b.creditNote ?? 'Backdrop art by'} ${b.credit}.`;
+  }
+
+  function render(content) {
+    applySite(content);
+    const gateways = content.gateways ?? [];
+    if (!gateways.length) return renderState('Nothing is on the list yet.');
+    list.replaceChildren(...gateways.map(buildEntry));
+
+    const empty = gateways.filter((g) => !(g.stats ?? []).length);
+    note.hidden = empty.length === 0;
+    if (empty.length) {
+      const names = empty.map((g) => g.name);
+      const listed = names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names.at(-1)}` : names[0];
+      note.textContent = `${listed} ${empty.length > 1 ? 'have' : 'has'} no numbers entered yet, so ${
+        empty.length > 1 ? 'those entries are' : 'that entry is'
+      } blank rather than showing a zero.`;
+    }
+  }
+
+  function baked() {
+    try {
+      const parsed = JSON.parse(document.getElementById('baked-data').textContent);
+      return parsed && Array.isArray(parsed.gateways) && parsed.gateways.length ? parsed : null;
+    } catch {
+      return null;
+    }
+  }
+
+  async function load() {
+    list.setAttribute('aria-busy', 'true');
+    try {
+      const res = await fetch(`content.json?t=${Date.now()}`, { cache: 'no-store' });
+      if (!res.ok) throw new Error(`content.json responded ${res.status}`);
+      render(await res.json());
+    } catch (error) {
+      // Opened off the disk, fetch cannot read a sibling file on a file://
+      // origin. The baked copy keeps the page readable.
+      const fallback = baked();
+      if (!fallback) return renderState('The list would not load.', error.message ?? String(error), load);
+      render(fallback);
+    } finally {
+      list.removeAttribute('aria-busy');
+    }
+  }
+
+  load();
+</script>

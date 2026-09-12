@@ -1,0 +1,104 @@
+{
+  "_README": [
+    "This is the only file you edit. Everything on the page comes from here.",
+    "",
+    "updated  — the date shown under each entry. Bump it when you change numbers.",
+    "stats    — max 3 per gateway. Fewer is fine. value is shown large, label small.",
+    "           Write value exactly as it should appear, separators included: \"2,324\".",
+    "posters  — max 5 per gateway. Direct image URLs. Fewer is fine; empty slots",
+    "           render as quiet placeholders rather than being hidden.",
+    "",
+    "backdrop — swap the art by dropping new files in media/ and pointing these",
+    "           paths at them. credit is the artist and is shown in the colophon.",
+    "",
+    "After editing, run `node scripts/bake.mjs` so the page still reads when it",
+    "is opened straight off the disk."
+  ],
+
+  "site": {
+    "name": "Kahfi's Sanctuary",
+    "title": "Kahfi's Sanctuary",
+    "intro": "I enjoy art, a lot.",
+    "byline": "Kept by Kahfi R.",
+    "repo": "https://github.com/nrkahfirhmd/personal-sanctuary"
+  },
+
+  "backdrop": {
+    "webm": "media/art-backdrop.webm",
+    "mp4": "media/art-backdrop.mp4",
+    "poster": "media/art-backdrop-poster.webp",
+    "credit": "Tilixia Summer",
+    "creditNote": "Backdrop art by"
+  },
+
+  "gateways": [
+    {
+      "hobby": "Anime",
+      "name": "AniList",
+      "username": "Sakyta",
+      "url": "https://anilist.co/user/Sakyta/",
+      "updated": "2026-09-12",
+      "stats": [
+        { "value": "135", "label": "anime completed" },
+        { "value": "85.9", "label": "mean score" },
+        { "value": "2,324", "label": "episodes" }
+      ],
+      "posters": [
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx113290-zsH3Ni7M7STm.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx114121-vxWVgIBlBjox.png",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx107913-kM9fv7X13cXe.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx107912-pLrOL1AzEIEt.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx140960-Kb6R5nYQfjmP.jpg"
+      ]
+    },
+    {
+      "hobby": "TV",
+      "name": "Serializd",
+      "username": "Sakyta",
+      "url": "https://serializd.com/user/Sakyta/profile",
+      "updated": null,
+      "stats": [],
+      "posters": []
+    },
+    {
+      "hobby": "Books",
+      "name": "StoryGraph",
+      "username": "firanda",
+      "url": "https://app.thestorygraph.com/profile/firanda",
+      "updated": null,
+      "stats": [],
+      "posters": []
+    },
+    {
+      "hobby": "Films",
+      "name": "Letterboxd",
+      "username": "firanda",
+      "url": "https://letterboxd.com/firanda/",
+      "updated": "2026-09-12",
+      "stats": [
+        { "value": "110", "label": "films watched" },
+        { "value": "12", "label": "this year" }
+      ],
+      "posters": []
+    },
+    {
+      "hobby": "Games",
+      "name": "Backloggd",
+      "username": "Firanda",
+      "url": "https://backloggd.com/u/Firanda/",
+      "updated": "2026-09-12",
+      "stats": [
+        { "value": "27", "label": "games played" },
+        { "value": "5", "label": "played in 2026" },
+        { "value": "0", "label": "in the backlog" }
+      ],
+      "posters": [
+        "https://images.igdb.com/igdb/image/upload/t_cover_big/coclf1.jpg",
+        "https://images.igdb.com/igdb/image/upload/t_cover_big/cobg1l.jpg",
+        "https://images.igdb.com/igdb/image/upload/t_cover_big/co44mb.jpg",
+        "https://images.igdb.com/igdb/image/upload/t_cover_big/cob8gm.jpg",
+        "https://images.igdb.com/igdb/image/upload/t_cover_big/co87df.jpg"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,441 @@
+/* Personal Sanctuary — The Index.
+   Near-white paper, one deep green, one type family, hairline rules.
+   The numbers are the only ornament. */
+
+:root {
+  --paper: #fafaf8;
+  --ink: #16161a;
+  --muted: #6b6b75;
+  --rule: #e4e3dd;
+  --accent: #2e5e4e;
+  --accent-wash: #eef3f0;
+
+  /* Type ramp: two fluid display roles (the headline and the stat value) plus
+     four fixed steps. Eight near-identical sizes below 1rem is how a ramp rots;
+     a fifth step here is drift, not a decision. */
+  --t-micro: 0.72rem;
+  --t-small: 0.82rem;
+  --t-body: 0.95rem;
+  --t-lead: 1.1rem;
+
+  --measure: 42rem;
+  --gutter: clamp(1.25rem, 5vw, 2.5rem);
+
+  color-scheme: light dark;
+}
+
+/* The page is read on a phone at any hour, so it follows the reader's setting
+   rather than picking a side. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #121214;
+    --ink: #ecebe9;
+    --muted: #9a9aa4;
+    --rule: #2a2a2e;
+    --accent: #7fc4a8;
+    --accent-wash: #1a2320;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scrollbar-color: var(--muted) var(--paper);
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Libre Franklin', ui-sans-serif, system-ui, sans-serif;
+  font-size: 100%;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -4rem;
+  z-index: 2;
+  padding: 0.5rem 0.9rem;
+  background: var(--accent);
+  color: var(--paper);
+  font-size: var(--t-small);
+  text-decoration: none;
+  transition: top 140ms ease-out;
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
+}
+
+/* ---- backdrop --------------------------------------------------------- */
+
+/* A 16:5 banner that dissolves into the page rather than ending on an edge.
+   The mask fades the image itself to transparent, so the blend is correct in
+   both themes without a per-theme scrim colour on top of it. */
+.backdrop {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 5;
+  max-height: 46vh;
+  overflow: hidden;
+  background: var(--paper);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 42%,
+    rgba(0, 0, 0, 0.62) 68%,
+    rgba(0, 0, 0, 0.24) 86%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 42%,
+    rgba(0, 0, 0, 0.62) 68%,
+    rgba(0, 0, 0, 0.24) 86%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.backdrop__media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* A looping banner is decoration, so it holds still for anyone who asked for
+   that. The poster frame carries the same image. */
+@media (prefers-reduced-motion: reduce) {
+  .backdrop__media {
+    display: none;
+  }
+
+  .backdrop {
+    background: var(--paper) var(--backdrop-poster, url('media/art-backdrop-poster.webp')) center / cover no-repeat;
+  }
+}
+
+.page {
+  max-width: calc(var(--measure) + var(--gutter) * 2);
+  margin: 0 auto;
+  /* The banner supplies the top air. Content clears its foot entirely: the
+     mask makes that ground a per-pixel blend, so no text may sit on it. */
+  padding: clamp(1.75rem, 4vh, 3rem) var(--gutter) 4rem;
+  position: relative;
+}
+
+/* ---- masthead --------------------------------------------------------- */
+
+.masthead__title {
+  /* Light and large: the only display gesture on the page. There is no eyebrow
+     above it; the byline lives in the colophon. */
+  margin: 0;
+  max-width: 18ch;
+  font-size: clamp(2rem, 6.2vw, 3.1rem);
+  font-weight: 300;
+  line-height: 1.12;
+  letter-spacing: -0.021em;
+  text-wrap: balance;
+}
+
+.masthead__note {
+  margin: 1.4rem 0 0;
+  max-width: 54ch;
+  font-size: var(--t-body);
+  color: var(--muted);
+}
+
+/* ---- the list --------------------------------------------------------- */
+
+.index {
+  margin: clamp(2.75rem, 8vh, 4.5rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.entry {
+  border-top: 1px solid var(--rule);
+}
+
+.entry:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.entry__link {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 12fr);
+  gap: 1.4rem 2rem;
+  align-items: start;
+  padding: 1.7rem 0.75rem 1.8rem;
+  margin-inline: -0.75rem;
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 180ms ease-out;
+}
+
+.entry__link:hover,
+.entry__link:focus-visible {
+  background: var(--accent-wash);
+}
+
+.entry__hobby {
+  margin: 0;
+  font-size: clamp(1.35rem, 3.4vw, 1.7rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+/* The one authored moment: a rule draws itself under the name on the way in. */
+.entry__hobby::after {
+  content: '';
+  display: block;
+  height: 1px;
+  margin-top: 0.2rem;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.entry__link:hover .entry__hobby::after,
+.entry__link:focus-visible .entry__hobby::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entry__hobby::after {
+    transition: none;
+  }
+}
+
+.entry__meta {
+  margin: 0.45rem 0 0;
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+/* Three different usernames across five sites is a fact about the person, so
+   each line carries its own rather than unifying them. */
+.entry__user::before {
+  content: ' / ';
+}
+
+.entry__user {
+  font-style: italic;
+}
+
+.entry__when {
+  margin: 0.15rem 0 0;
+  font-size: var(--t-small);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.entry__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.2rem 1.1rem;
+  margin: 0;
+}
+
+.stat {
+  min-width: 0;
+}
+
+.stat__value {
+  margin: 0;
+  font-size: clamp(1.3rem, 3.1vw, 1.65rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.stat__label {
+  margin-top: 0.2rem;
+  font-size: var(--t-micro);
+  font-weight: 500;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Exactly three columns whether an entry fills them or not, so values line up
+   down the whole list. */
+.entry__none {
+  margin: 0;
+  font-size: var(--t-body);
+  font-style: italic;
+  color: var(--muted);
+}
+
+/* ---- posters ----------------------------------------------------------- */
+
+/* Five slots per entry, always. The strip spans the full row so the covers get
+   room; an unfilled slot is a plate, not a gap, so the rhythm survives an entry
+   with one cover or none. */
+.posters {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.poster {
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: var(--rule);
+  border-radius: 2px;
+}
+
+.poster__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.poster--empty {
+  /* A slot nobody filled reads as ruled paper, not as a failed image. */
+  background: color-mix(in srgb, var(--rule) 38%, var(--paper));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--rule) 60%, var(--paper));
+}
+
+.poster--empty .poster__img {
+  display: none;
+}
+
+/* ---- states ----------------------------------------------------------- */
+
+.state {
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--rule);
+}
+
+.state__line {
+  margin: 0;
+  font-size: var(--t-lead);
+  font-weight: 400;
+}
+
+.state__why {
+  margin: 0.4rem 0 0;
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+.state__retry {
+  margin-top: 1.1rem;
+  padding: 0.5rem 1.1rem;
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  font-size: var(--t-small);
+  cursor: pointer;
+  caret-color: var(--accent);
+  transition: background-color 160ms ease-out, color 160ms ease-out;
+}
+
+.state__retry:hover {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+/* ---- colophon --------------------------------------------------------- */
+
+.colophon {
+  margin-top: clamp(2.5rem, 7vh, 4rem);
+  max-width: 60ch;
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+.colophon p {
+  margin: 0 0 0.8rem;
+}
+
+.colophon__note {
+  padding-left: 0.9rem;
+  border-left: 1px solid var(--accent);
+  color: var(--ink);
+}
+
+/* The artist's name, set as plainly as the rest of the colophon. */
+.colophon__credit {
+  color: var(--muted);
+}
+
+@media (max-width: 34rem) {
+  .entry__link {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.15rem;
+    padding: 1.5rem 0.75rem 1.6rem;
+  }
+
+  /* Three across on a phone too. The stats are a row, not a stack — breaking
+     them onto new lines loses the comparison the grid exists to make. */
+  .entry__stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem 0.75rem;
+  }
+
+  /* The ramp stays four steps: --t-micro takes a smaller value here rather
+     than a fifth step being invented for the phone. Its only consumer is the
+     stat label, which has to hold three across at 320px. */
+  :root {
+    --t-micro: 0.66rem;
+  }
+
+  /* The value's clamp already floors at 1.3rem on a phone, so only the fit
+     needs adjusting, not the size. */
+  .stat__value {
+    letter-spacing: -0.03em;
+  }
+
+  .stat__label {
+    letter-spacing: 0.03em;
+  }
+}
