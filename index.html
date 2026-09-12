@@ -55,13 +55,9 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
   </main>
 
   <footer class="colophon">
-    <p class="colophon__note" id="note" hidden></p>
     <p class="colophon__credit" id="credit" hidden></p>
     <p>
-      <span id="byline">Kept by Kahfi R.</span> The numbers are entered by hand in
-      <a id="repo" href="https://github.com/nrkahfirhmd/personal-sanctuary">content.json</a>
-      and carry the date they were last touched, so they are as current as the last time I sat down with
-      them, not as current as the profiles themselves.
+      <span id="byline">Kept by <a id="personal-website" href="https://kahfirahmada.my.id">Kahfi R</a></span>
     </p>
   </footer>
 </div>
@@ -91,8 +87,7 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
     "name": "Kahfi's Sanctuary",
     "title": "Kahfi's Sanctuary",
     "intro": "I enjoy art, a lot.",
-    "byline": "Kept by Kahfi R.",
-    "repo": "https://github.com/nrkahfirhmd/personal-sanctuary"
+    "byline": "Kept by Kahfi R."
   },
 
   "backdrop": {
@@ -105,51 +100,50 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
 
   "gateways": [
     {
-      "hobby": "Anime",
+      "hobby": "Anime & Manga",
       "name": "AniList",
       "username": "Sakyta",
       "url": "https://anilist.co/user/Sakyta/",
       "updated": "2026-09-12",
       "stats": [
-        { "value": "135", "label": "anime completed" },
-        { "value": "85.9", "label": "mean score" },
-        { "value": "2,324", "label": "episodes" }
+        { "value": "135", "label": "anime" },
+        { "value": "81", "label": "manga" },
+        { "value": "85,25", "label": "mean score" }
       ],
-      "posters": [
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx113290-zsH3Ni7M7STm.jpg",
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx114121-vxWVgIBlBjox.png",
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx107913-kM9fv7X13cXe.jpg",
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx107912-pLrOL1AzEIEt.jpg",
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx140960-Kb6R5nYQfjmP.jpg"
-      ]
+      "posters": []
     },
     {
-      "hobby": "TV",
+      "hobby": "TV Series",
       "name": "Serializd",
       "username": "Sakyta",
       "url": "https://serializd.com/user/Sakyta/profile",
       "updated": null,
-      "stats": [],
+      "stats": [
+        { "value": "6", "label": "shows" },
+        { "value": "185", "label": "episodes" },
+        { "value": "3d 19h", "label": "time spent" }
+      ],
       "posters": []
     },
     {
       "hobby": "Books",
       "name": "StoryGraph",
-      "username": "firanda",
+      "username": "Firanda",
       "url": "https://app.thestorygraph.com/profile/firanda",
       "updated": null,
-      "stats": [],
+      "stats": [
+        { "value": "6", "label": "books" }
+      ],
       "posters": []
     },
     {
       "hobby": "Films",
       "name": "Letterboxd",
-      "username": "firanda",
+      "username": "Firanda",
       "url": "https://letterboxd.com/firanda/",
       "updated": "2026-09-12",
       "stats": [
-        { "value": "110", "label": "films watched" },
-        { "value": "12", "label": "this year" }
+        { "value": "110", "label": "films" }
       ],
       "posters": []
     },
@@ -160,9 +154,9 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
       "url": "https://backloggd.com/u/Firanda/",
       "updated": "2026-09-12",
       "stats": [
-        { "value": "27", "label": "games played" },
-        { "value": "5", "label": "played in 2026" },
-        { "value": "0", "label": "in the backlog" }
+        { "value": "27", "label": "games 100%" },
+        { "value": "2150+", "label": "hours playing" },
+        { "value": "100+", "label": "in the backlog" }
       ],
       "posters": [
         "https://images.igdb.com/igdb/image/upload/t_cover_big/coclf1.jpg",
@@ -182,6 +176,7 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
   const STAT_SLOTS = 3;
 
   const list = document.getElementById('index');
+  // Optional: the footer may or may not carry a summary line.
   const note = document.getElementById('note');
   const credit = document.getElementById('credit');
 
@@ -212,9 +207,14 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
     const meta = el('p', 'entry__meta');
     meta.append(el('span', null, entry.name), el('span', 'entry__user', entry.username));
     head.append(meta);
-    head.append(
-      el('p', 'entry__when', entry.updated ? `updated ${pretty(entry.updated)}` : 'nothing entered yet')
-    );
+    // "nothing entered yet" is only true when nothing IS entered. An entry with
+    // numbers but no date is missing a date, which is a different statement.
+    const when = entry.updated
+      ? `updated ${pretty(entry.updated)}`
+      : stats.length
+        ? 'no date recorded'
+        : 'nothing entered yet';
+    head.append(el('p', 'entry__when', when));
     link.append(head);
 
     if (stats.length) {
@@ -231,28 +231,26 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
       link.append(el('p', 'entry__none', 'no numbers entered yet'));
     }
 
-    // Five slots, always. An empty slot is drawn as a plate rather than hidden,
-    // so the row keeps its rhythm whether one cover is filled in or five.
-    const strip = el('ul', 'posters');
-    for (let i = 0; i < POSTER_SLOTS; i += 1) {
-      const slot = el('li', 'poster');
-      const url = posters[i];
-      if (url) {
+    // Only real covers are drawn. The grid keeps five columns so a poster is the
+    // same size in every entry, but an unfilled column stays empty rather than
+    // holding a placeholder, and an entry with no covers gets no strip at all.
+    if (posters.length) {
+      const strip = el('ul', 'posters');
+      for (const url of posters) {
+        const slot = el('li', 'poster');
         const img = el('img', 'poster__img');
         img.src = url;
         img.alt = '';
         img.loading = 'lazy';
         img.decoding = 'async';
-        // An image that will not load falls back to the empty plate rather than
-        // leaving a broken-image glyph in the strip.
-        img.addEventListener('error', () => slot.classList.add('poster--empty'), { once: true });
+        // A cover that will not load takes its slot with it, rather than
+        // leaving a broken-image glyph or an empty box in the strip.
+        img.addEventListener('error', () => slot.remove(), { once: true });
         slot.append(img);
-      } else {
-        slot.classList.add('poster--empty');
+        strip.append(slot);
       }
-      strip.append(slot);
+      link.append(strip);
     }
-    link.append(strip);
 
     item.append(link);
     return item;
@@ -275,8 +273,12 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
     const site = content.site ?? {};
     if (site.title) document.getElementById('title').textContent = site.title;
     document.getElementById('intro').textContent = site.intro ?? '';
-    if (site.byline) document.getElementById('byline').textContent = site.byline;
-    if (site.repo) document.getElementById('repo').href = site.repo;
+    // Writing textContent here would delete any markup inside the byline — the
+    // personal-site link among it. A byline that carries its own markup keeps it.
+    const byline = document.getElementById('byline');
+    if (byline && site.byline && !byline.firstElementChild) byline.textContent = site.byline;
+    const repoLink = document.getElementById('repo');
+    if (repoLink && site.repo) repoLink.href = site.repo;
 
     const b = content.backdrop ?? {};
     if (b.webm) document.getElementById('backdrop-webm').src = b.webm;
@@ -297,6 +299,7 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
     if (!gateways.length) return renderState('Nothing is on the list yet.');
     list.replaceChildren(...gateways.map(buildEntry));
 
+    if (!note) return;
     const empty = gateways.filter((g) => !(g.stats ?? []).length);
     note.hidden = empty.length === 0;
     if (empty.length) {

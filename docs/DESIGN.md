@@ -648,46 +648,19 @@ A reader who knows the show sees it before they read the number.
   and nothing on the page discovers them. The text beside them is the
   authoritative content, so an empty `alt` keeps a screen reader on the words
   rather than reading five filenames.
-- **Empty slot:** `.poster--empty` — fill
-  `color-mix(in srgb, var(--rule) 38%, var(--paper))` with a 1px inset ring at
-  60%. Quiet enough to recede, present enough to hold the column.
-- **Failed image:** a JS `error` listener adds `.poster--empty` to the slot
-  (`{ once: true }`), so a cover that 404s or is hot-link-blocked downgrades to
-  the same plate rather than leaving a broken-image glyph in the strip. One
-  visual outcome for two different causes, on purpose.
+- **Empty slot:** there is none. Slots are rendered per cover, so an unfilled
+  column is simply absent and an entry with no covers renders no `<ul>` at all.
+- **Failed image:** a JS `error` listener removes the slot (`{ once: true }`),
+  so a cover that 404s or is hot-link-blocked leaves nothing behind rather than
+  a broken-image glyph or an empty box. One visual outcome for two different
+  causes, on purpose: in both, the cover is not there and the page says so by
+  showing nothing.
 
-**The Empty Plate Rule.** Five slots render per entry, always
-(`POSTER_SLOTS = 5`), filled or not. An unfilled slot draws as a quiet plate; it
-never collapses, and the strip never sizes itself to the number of covers on
-hand. This is the same doctrine as The No-Substituted-Zero Rule in the other
-direction: the zero rule refuses to *invent* content the page does not have, and
-this rule refuses to *hide* the shape of what is missing. The row reads
-identically at five covers, one cover or none, which is the only reason the list
-holds its rhythm when one entry's covers were typed in this morning and another's
-have never been typed in at all. That unevenness is permanent, not transitional:
-every value here is entered by hand, so entries will always be at different
-stages of being filled in, and a layout that rearranges itself around that would
-never sit still. A plate is an honest blank. A collapsed strip is a row
-pretending it was never meant to have covers.
+**The No-Placeholder Rule.** A poster slot is drawn only when there is a cover to put in it. An entry with no covers renders no strip at all, and a cover that fails to load takes its slot with it rather than leaving a box. The strip keeps five columns whatever it holds, so a poster is the same size in every entry and a partly-filled row simply ends early instead of stretching its covers.
 
-### States
+This reverses an earlier Empty Plate Rule, which drew a quiet plate for every unfilled slot on the argument that a fixed silhouette keeps the list's rhythm. That argument held while most entries had covers. Once most did not, twenty plates were louder than the ten real covers and described nothing: a plate for an absent cover is chrome standing in for content, which the page refuses everywhere else. The rhythm is carried by the shared stat grid and the hairline rules, which do not depend on the posters at all.
 
-Three list states and one per-entry state.
-
-- **Loading:** "Reading the list…" at `--t-lead` in a `<li class="state">` with
-  a top rule and `2.5rem` of vertical padding. The `<ol>` carries
-  `aria-busy="true"` in the markup and drops it when the load settles.
-- **Empty:** "Nothing is on the list yet." Same treatment, no retry. Fires when
-  `content.json` parses but its `gateways` array is empty. Verified.
-- **Error:** a `--t-lead` line ("The list would not load."), a `--t-small` muted
-  line beneath carrying the underlying message, and a retry button. This state
-  only appears when the fetch fails *and* the baked copy is unusable.
-- **Entry with nothing entered:** not a list state but a per-entry one — an
-  entry with no stats prints "no numbers entered yet" in italic muted
-  `--t-body` (`.entry__none`) in place of its stat grid, and its date line reads
-  "nothing entered yet". There is no modifier class on the `<li>`: the empty
-  entry is styled entirely by what it renders, not by a flag, so the state
-  cannot drift out of sync with the markup that expresses it.
+This does not weaken The No-Substituted-Zero Rule, which it can look like it contradicts. That rule refuses to *invent a value* the page never measured. This one refuses to *draw furniture* for content that does not exist. Neither permits a blank to be dressed up as something.
 
 **The No-Substituted-Zero Rule.** An entry with nothing entered says so in place
 of its numbers. It never shows `0`, never shows an em dash, and never silently
@@ -802,8 +775,9 @@ element on the page uses it. Verified by keyboard at 1440 in both schemes.
   poster strip identical (5 columns at every width), even when an entry has
   fewer stats or fewer covers. The caps are the alignment. On a narrow viewport
   pay for the columns in type size, not in column count.
-- **Do** draw an unfilled or failed poster slot as a quiet plate, so a row with
-  one cover occupies the same shape as a row with five.
+- **Don't** draw a placeholder for a poster that does not exist. The five-column
+  grid keeps every cover the same size; a partly-filled row ends early, and an
+  entry with no covers shows no strip.
 - **Do** blend the banner by masking the image's own alpha, so one declaration
   serves both schemes.
 - **Do** keep all page content clear of the banner's foot — top padding on
@@ -1026,11 +1000,11 @@ The one image on the page: a 16:5 band masked to transparent at its foot so it d
 The signature component. The whole band is one link: identity left, three stat columns right (three at every width), five poster slots beneath. Hover and focus are the same state.
 
 ```html
-<ul class="ds-index"><li class="ds-entry"><a class="ds-entry-link" href="#"><div><h3 class="ds-entry-hobby">Anime</h3><p class="ds-entry-meta">AniList<span class="ds-entry-user"> / Sakyta</span></p><p class="ds-entry-when">updated 12 Sep 2026</p></div><dl class="ds-entry-stats"><div class="ds-stat"><dd class="ds-stat-value">135</dd><dt class="ds-stat-label">anime completed</dt></div><div class="ds-stat"><dd class="ds-stat-value">85.9</dd><dt class="ds-stat-label">mean score</dt></div><div class="ds-stat"><dd class="ds-stat-value">2,324</dd><dt class="ds-stat-label">episodes</dt></div></dl><ul class="ds-posters"><li class="ds-poster ds-poster-empty"></li><li class="ds-poster ds-poster-empty"></li><li class="ds-poster ds-poster-empty"></li><li class="ds-poster ds-poster-empty"></li><li class="ds-poster ds-poster-empty"></li></ul></a></li></ul>
+<ul class="ds-index"><li class="ds-entry"><a class="ds-entry-link" href="#"><div><h3 class="ds-entry-hobby">Anime</h3><p class="ds-entry-meta">AniList<span class="ds-entry-user"> / Sakyta</span></p><p class="ds-entry-when">updated 12 Sep 2026</p></div><dl class="ds-entry-stats"><div class="ds-stat"><dd class="ds-stat-value">135</dd><dt class="ds-stat-label">anime completed</dt></div><div class="ds-stat"><dd class="ds-stat-value">85.9</dd><dt class="ds-stat-label">mean score</dt></div><div class="ds-stat"><dd class="ds-stat-value">2,324</dd><dt class="ds-stat-label">episodes</dt></div></dl><ul class="ds-posters"><li class="ds-poster"><span class="ds-poster-img"></span></li><li class="ds-poster"><span class="ds-poster-img ds-b"></span></li></ul></a></li></ul>
 ```
 
 ```css
-:host{--paper:#fafaf8;--ink:#16161a;--muted:#6b6b75;--rule:#e4e3dd;--accent:#2e5e4e;--accent-wash:#eef3f0;--t-micro:0.72rem;--t-small:0.82rem;--t-body:0.95rem;--t-lead:1.1rem;font-family:"Libre Franklin",ui-sans-serif,system-ui,sans-serif;color:var(--ink)}.ds-index{margin:0;padding:0;list-style:none}.ds-entry{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}.ds-entry-link{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,12fr);gap:1.4rem 2rem;align-items:start;padding:1.7rem .75rem 1.8rem;margin-inline:-.75rem;color:inherit;text-decoration:none;transition:background-color 180ms ease-out}.ds-entry-link:hover,.ds-entry-link:focus-visible{background:var(--accent-wash)}.ds-entry-link:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:2px}.ds-entry-hobby{margin:0;font-size:clamp(1.35rem,3.4vw,1.7rem);font-weight:400;line-height:1.15;letter-spacing:-.015em}.ds-entry-hobby::after{content:"";display:block;height:1px;margin-top:.2rem;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 260ms cubic-bezier(.16,1,.3,1)}.ds-entry-link:hover .ds-entry-hobby::after,.ds-entry-link:focus-visible .ds-entry-hobby::after{transform:scaleX(1)}.ds-entry-meta{margin:.45rem 0 0;font-size:var(--t-small);color:var(--muted)}.ds-entry-user{font-style:italic}.ds-entry-when{margin:.15rem 0 0;font-size:var(--t-small);color:var(--muted);font-variant-numeric:tabular-nums}.ds-entry-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem 1.5rem;margin:0}.ds-stat{min-width:0}.ds-stat-value{margin:0;font-size:clamp(1.3rem,3.1vw,1.65rem);font-weight:300;line-height:1.1;letter-spacing:-.025em;font-variant-numeric:tabular-nums lining-nums}.ds-stat-label{margin-top:.2rem;font-size:var(--t-micro);font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}.ds-posters{grid-column:1/-1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.6rem;margin:0;padding:0;list-style:none}.ds-poster{aspect-ratio:2/3;overflow:hidden;background:var(--rule);border-radius:2px}.ds-poster-empty{background:color-mix(in srgb,var(--rule) 38%,var(--paper));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--rule) 60%,var(--paper))}@media (max-width:34rem){.ds-entry-link{grid-template-columns:minmax(0,1fr);gap:1.15rem;padding:1.5rem .75rem 1.6rem}.ds-entry-stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem .75rem}:host{--t-micro:.66rem}.ds-stat-value{letter-spacing:-.03em}.ds-stat-label{letter-spacing:.03em}}@media (prefers-reduced-motion:reduce){.ds-entry-hobby::after{transition:none}}
+:host{--paper:#fafaf8;--ink:#16161a;--muted:#6b6b75;--rule:#e4e3dd;--accent:#2e5e4e;--accent-wash:#eef3f0;--t-micro:0.72rem;--t-small:0.82rem;--t-body:0.95rem;--t-lead:1.1rem;font-family:"Libre Franklin",ui-sans-serif,system-ui,sans-serif;color:var(--ink)}.ds-index{margin:0;padding:0;list-style:none}.ds-entry{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}.ds-entry-link{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,12fr);gap:1.4rem 2rem;align-items:start;padding:1.7rem .75rem 1.8rem;margin-inline:-.75rem;color:inherit;text-decoration:none;transition:background-color 180ms ease-out}.ds-entry-link:hover,.ds-entry-link:focus-visible{background:var(--accent-wash)}.ds-entry-link:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:2px}.ds-entry-hobby{margin:0;font-size:clamp(1.35rem,3.4vw,1.7rem);font-weight:400;line-height:1.15;letter-spacing:-.015em}.ds-entry-hobby::after{content:"";display:block;height:1px;margin-top:.2rem;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 260ms cubic-bezier(.16,1,.3,1)}.ds-entry-link:hover .ds-entry-hobby::after,.ds-entry-link:focus-visible .ds-entry-hobby::after{transform:scaleX(1)}.ds-entry-meta{margin:.45rem 0 0;font-size:var(--t-small);color:var(--muted)}.ds-entry-user{font-style:italic}.ds-entry-when{margin:.15rem 0 0;font-size:var(--t-small);color:var(--muted);font-variant-numeric:tabular-nums}.ds-entry-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem 1.5rem;margin:0}.ds-stat{min-width:0}.ds-stat-value{margin:0;font-size:clamp(1.3rem,3.1vw,1.65rem);font-weight:300;line-height:1.1;letter-spacing:-.025em;font-variant-numeric:tabular-nums lining-nums}.ds-stat-label{margin-top:.2rem;font-size:var(--t-micro);font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}.ds-posters{grid-column:1/-1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.6rem;margin:0;padding:0;list-style:none}.ds-poster{aspect-ratio:2/3;overflow:hidden;background:var(--rule);border-radius:2px}@media (max-width:34rem){.ds-entry-link{grid-template-columns:minmax(0,1fr);gap:1.15rem;padding:1.5rem .75rem 1.6rem}.ds-entry-stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem .75rem}:host{--t-micro:.66rem}.ds-stat-value{letter-spacing:-.03em}.ds-stat-label{letter-spacing:.03em}}@media (prefers-reduced-motion:reduce){.ds-entry-hobby::after{transition:none}}
 ```
 
 ### Stat Pair
@@ -1047,14 +1021,14 @@ Number first and largest, its name small and quiet beneath. dd before dt in the 
 
 ### Poster Strip
 
-Five 2:3 cover slots per entry, always. Filled slots are hot-linked CDN covers with alt=""; unfilled and failed slots draw as a quiet plate so the row keeps its rhythm at five covers or none.
+Up to five 2:3 covers per entry, hot-linked from the trackers' CDNs with alt="". The grid holds five columns so a cover is the same size in every entry; unfilled columns stay empty and a failed image removes its own slot.
 
 ```html
-<ul class="ds-posters"><li class="ds-poster"><span class="ds-poster-img"></span></li><li class="ds-poster"><span class="ds-poster-img ds-b"></span></li><li class="ds-poster ds-poster-empty"></li><li class="ds-poster ds-poster-empty"></li><li class="ds-poster ds-poster-empty"></li></ul>
+<ul class="ds-posters"><li class="ds-poster"><span class="ds-poster-img"></span></li><li class="ds-poster"><span class="ds-poster-img ds-b"></span></li></ul>
 ```
 
 ```css
-:host{--paper:#fafaf8;--ink:#16161a;--muted:#6b6b75;--rule:#e4e3dd;--accent:#2e5e4e;--accent-wash:#eef3f0;--t-micro:0.72rem;--t-small:0.82rem;--t-body:0.95rem;--t-lead:1.1rem;font-family:"Libre Franklin",ui-sans-serif,system-ui,sans-serif;color:var(--ink)}.ds-posters{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.6rem;margin:0;padding:0;list-style:none;max-width:34rem}.ds-poster{aspect-ratio:2/3;overflow:hidden;background:var(--rule);border-radius:2px}.ds-poster-img{display:block;width:100%;height:100%;background:linear-gradient(160deg,#3d5a6c,#8fb3c4)}.ds-poster-img.ds-b{background:linear-gradient(160deg,#6c4a5a,#c4a08f)}.ds-poster-empty{background:color-mix(in srgb,var(--rule) 38%,var(--paper));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--rule) 60%,var(--paper))}
+:host{--paper:#fafaf8;--ink:#16161a;--muted:#6b6b75;--rule:#e4e3dd;--accent:#2e5e4e;--accent-wash:#eef3f0;--t-micro:0.72rem;--t-small:0.82rem;--t-body:0.95rem;--t-lead:1.1rem;font-family:"Libre Franklin",ui-sans-serif,system-ui,sans-serif;color:var(--ink)}.ds-posters{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.6rem;margin:0;padding:0;list-style:none;max-width:34rem}.ds-poster{aspect-ratio:2/3;overflow:hidden;background:var(--rule);border-radius:2px}.ds-poster-img{display:block;width:100%;height:100%;background:linear-gradient(160deg,#3d5a6c,#8fb3c4)}.ds-poster-img.ds-b{background:linear-gradient(160deg,#6c4a5a,#c4a08f)}
 ```
 
 ### Entry With Nothing Entered
@@ -1062,11 +1036,11 @@ Five 2:3 cover slots per entry, always. Filled slots are hot-linked CDN covers w
 An entry whose numbers have not been entered yet says so in italic muted body in place of its stat grid, and its date line reads “nothing entered yet”. It never substitutes a zero — a real 0 ships elsewhere on the page.
 
 ```html
-<ul class="ds-index"><li class="ds-entry"><a class="ds-entry-link" href="#"><div><h3 class="ds-entry-hobby">Books</h3><p class="ds-entry-meta">StoryGraph<span class="ds-entry-user"> / firanda</span></p><p class="ds-entry-when">nothing entered yet</p></div><p class="ds-entry-none">no numbers entered yet</p><ul class="ds-posters"><li class="ds-poster ds-poster-empty"></li><li class="ds-poster ds-poster-empty"></li><li class="ds-poster ds-poster-empty"></li><li class="ds-poster ds-poster-empty"></li><li class="ds-poster ds-poster-empty"></li></ul></a></li></ul>
+<ul class="ds-index"><li class="ds-entry"><a class="ds-entry-link" href="#"><div><h3 class="ds-entry-hobby">Books</h3><p class="ds-entry-meta">StoryGraph<span class="ds-entry-user"> / firanda</span></p><p class="ds-entry-when">nothing entered yet</p></div><p class="ds-entry-none">no numbers entered yet</p><ul class="ds-posters"><li class="ds-poster"><span class="ds-poster-img"></span></li><li class="ds-poster"><span class="ds-poster-img ds-b"></span></li></ul></a></li></ul>
 ```
 
 ```css
-:host{--paper:#fafaf8;--ink:#16161a;--muted:#6b6b75;--rule:#e4e3dd;--accent:#2e5e4e;--accent-wash:#eef3f0;--t-micro:0.72rem;--t-small:0.82rem;--t-body:0.95rem;--t-lead:1.1rem;font-family:"Libre Franklin",ui-sans-serif,system-ui,sans-serif;color:var(--ink)}.ds-index{margin:0;padding:0;list-style:none}.ds-entry{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}.ds-entry-link{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,12fr);gap:1.4rem 2rem;align-items:start;padding:1.7rem .75rem 1.8rem;margin-inline:-.75rem;color:inherit;text-decoration:none;transition:background-color 180ms ease-out}.ds-entry-link:hover,.ds-entry-link:focus-visible{background:var(--accent-wash)}.ds-entry-hobby{margin:0;font-size:clamp(1.35rem,3.4vw,1.7rem);font-weight:400;line-height:1.15;letter-spacing:-.015em}.ds-entry-hobby::after{content:"";display:block;height:1px;margin-top:.2rem;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 260ms cubic-bezier(.16,1,.3,1)}.ds-entry-link:hover .ds-entry-hobby::after{transform:scaleX(1)}.ds-entry-meta{margin:.45rem 0 0;font-size:var(--t-small);color:var(--muted)}.ds-entry-user{font-style:italic}.ds-entry-when{margin:.15rem 0 0;font-size:var(--t-small);color:var(--muted);font-variant-numeric:tabular-nums}.ds-entry-none{margin:0;font-size:var(--t-body);font-style:italic;color:var(--muted)}.ds-posters{grid-column:1/-1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.6rem;margin:0;padding:0;list-style:none}.ds-poster{aspect-ratio:2/3;border-radius:2px}.ds-poster-empty{background:color-mix(in srgb,var(--rule) 38%,var(--paper));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--rule) 60%,var(--paper))}
+:host{--paper:#fafaf8;--ink:#16161a;--muted:#6b6b75;--rule:#e4e3dd;--accent:#2e5e4e;--accent-wash:#eef3f0;--t-micro:0.72rem;--t-small:0.82rem;--t-body:0.95rem;--t-lead:1.1rem;font-family:"Libre Franklin",ui-sans-serif,system-ui,sans-serif;color:var(--ink)}.ds-index{margin:0;padding:0;list-style:none}.ds-entry{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}.ds-entry-link{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,12fr);gap:1.4rem 2rem;align-items:start;padding:1.7rem .75rem 1.8rem;margin-inline:-.75rem;color:inherit;text-decoration:none;transition:background-color 180ms ease-out}.ds-entry-link:hover,.ds-entry-link:focus-visible{background:var(--accent-wash)}.ds-entry-hobby{margin:0;font-size:clamp(1.35rem,3.4vw,1.7rem);font-weight:400;line-height:1.15;letter-spacing:-.015em}.ds-entry-hobby::after{content:"";display:block;height:1px;margin-top:.2rem;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 260ms cubic-bezier(.16,1,.3,1)}.ds-entry-link:hover .ds-entry-hobby::after{transform:scaleX(1)}.ds-entry-meta{margin:.45rem 0 0;font-size:var(--t-small);color:var(--muted)}.ds-entry-user{font-style:italic}.ds-entry-when{margin:.15rem 0 0;font-size:var(--t-small);color:var(--muted);font-variant-numeric:tabular-nums}.ds-entry-none{margin:0;font-size:var(--t-body);font-style:italic;color:var(--muted)}.ds-posters{grid-column:1/-1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.6rem;margin:0;padding:0;list-style:none}.ds-poster{aspect-ratio:2/3;border-radius:2px}
 ```
 
 ### State Row

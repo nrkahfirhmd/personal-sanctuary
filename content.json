@@ -19,8 +19,7 @@
     "name": "Kahfi's Sanctuary",
     "title": "Kahfi's Sanctuary",
     "intro": "I enjoy art, a lot.",
-    "byline": "Kept by Kahfi R.",
-    "repo": "https://github.com/nrkahfirhmd/personal-sanctuary"
+    "byline": "Kept by Kahfi R."
   },
 
   "backdrop": {
@@ -33,51 +32,50 @@
 
   "gateways": [
     {
-      "hobby": "Anime",
+      "hobby": "Anime & Manga",
       "name": "AniList",
       "username": "Sakyta",
       "url": "https://anilist.co/user/Sakyta/",
       "updated": "2026-09-12",
       "stats": [
-        { "value": "135", "label": "anime completed" },
-        { "value": "85.9", "label": "mean score" },
-        { "value": "2,324", "label": "episodes" }
+        { "value": "135", "label": "anime" },
+        { "value": "81", "label": "manga" },
+        { "value": "85,25", "label": "mean score" }
       ],
-      "posters": [
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx113290-zsH3Ni7M7STm.jpg",
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx114121-vxWVgIBlBjox.png",
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx107913-kM9fv7X13cXe.jpg",
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx107912-pLrOL1AzEIEt.jpg",
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx140960-Kb6R5nYQfjmP.jpg"
-      ]
+      "posters": []
     },
     {
-      "hobby": "TV",
+      "hobby": "TV Series",
       "name": "Serializd",
       "username": "Sakyta",
       "url": "https://serializd.com/user/Sakyta/profile",
       "updated": null,
-      "stats": [],
+      "stats": [
+        { "value": "6", "label": "shows" },
+        { "value": "185", "label": "episodes" },
+        { "value": "3d 19h", "label": "time spent" }
+      ],
       "posters": []
     },
     {
       "hobby": "Books",
       "name": "StoryGraph",
-      "username": "firanda",
+      "username": "Firanda",
       "url": "https://app.thestorygraph.com/profile/firanda",
       "updated": null,
-      "stats": [],
+      "stats": [
+        { "value": "6", "label": "books" }
+      ],
       "posters": []
     },
     {
       "hobby": "Films",
       "name": "Letterboxd",
-      "username": "firanda",
+      "username": "Firanda",
       "url": "https://letterboxd.com/firanda/",
       "updated": "2026-09-12",
       "stats": [
-        { "value": "110", "label": "films watched" },
-        { "value": "12", "label": "this year" }
+        { "value": "110", "label": "films" }
       ],
       "posters": []
     },
@@ -88,9 +86,9 @@
       "url": "https://backloggd.com/u/Firanda/",
       "updated": "2026-09-12",
       "stats": [
-        { "value": "27", "label": "games played" },
-        { "value": "5", "label": "played in 2026" },
-        { "value": "0", "label": "in the backlog" }
+        { "value": "27", "label": "games 100%" },
+        { "value": "2150+", "label": "hours playing" },
+        { "value": "100+", "label": "in the backlog" }
       ],
       "posters": [
         "https://images.igdb.com/igdb/image/upload/t_cover_big/coclf1.jpg",
