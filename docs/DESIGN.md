@@ -163,7 +163,8 @@ the profiles they came from.
 
 **Key Characteristics:**
 
-- A full-bleed 16:5 banner masked to transparent at its foot, then one measured
+- A full-bleed 16:5 banner, pinned to the viewport and masked to transparent at
+  its foot, with the page sliding over it on an opaque sheet, then one measured
   column on near-white paper — no grid of cards, no sidebar.
 - Exactly one accent colour, used in eight sanctioned places.
 - One type family (Libre Franklin); hierarchy from size and weight only.
@@ -379,12 +380,24 @@ something needs more presence it gets more size or more air, not more weight.
 A full-width banner, then a single measured column, centred, on an otherwise
 empty ground.
 
-**The banner.** `.backdrop` is the one full-bleed element in the system: 100%
-wide, `aspect-ratio: 16 / 5`, capped at `max-height: 46vh` so it cannot eat a
-short viewport. It holds a muted, autoplaying, looping `<video>` at
-`object-fit: cover` with a WebM source, an MP4 fallback and a WebP poster frame;
-its foot is masked to transparent (see The Masked-Not-Scrimmed Rule). At 1440 it
-stands 414px tall; at 390 it stands 122px.
+**The banner.** `.backdrop` is the one full-bleed element in the system, and the
+only `position: fixed` one: pinned to the viewport at `top: 0`, 100% wide, and
+`var(--banner-h)` tall — `min(46vh, calc(100vw * 5 / 16))`, which is 16:5 capped
+so it cannot eat a short viewport. It holds a muted, autoplaying, looping
+`<video>` at `object-fit: cover` with a WebM source, an MP4 fallback and a WebP
+poster frame; its foot is masked to transparent (see The Masked-Not-Scrimmed
+Rule). At 1440 it stands 414px tall; at 390 it stands 122px.
+
+**The sheet.** `.sheet` wraps the whole column, carries `margin-top:
+var(--banner-h)` and the page ground full-bleed, and sits at `z-index: 1` above
+the pinned banner at `z-index: 0`. Scrolling therefore slides the sheet up over
+a banner that does not move. `--banner-h` is the single token both depend on;
+they cannot drift apart because neither computes its own height.
+
+The sheet's ground must stay opaque and full-bleed. A transparent sheet, or one
+narrowed to the text column, would let the banner show through or beside the
+content as it scrolls — and the content would then be sitting on the one ground
+the system refuses to put text on.
 
 **The column.** Two tokens define it: `--measure: 42rem` sets the text column
 and `--gutter: clamp(1.25rem, 5vw, 2.5rem)` sets the breathing room, and `.page`
@@ -441,14 +454,29 @@ longest label ("anime completed") takes a second line.
 
 ### Named Rules
 
+**The Pinned-Banner Rule.** The banner is fixed to the viewport and the page
+scrolls over it; the banner itself never moves. Two things make that safe rather
+than decorative. The sheet carrying the content is opaque and full-bleed, so
+nothing is ever read against the artwork. And under `prefers-reduced-motion` the
+banner reverts to `position: absolute` and scrolls away with the page, because a
+stationary layer under moving content *is* the parallax effect — it is motion
+whether or not anything is animating, and the reduced-motion request covers it.
+Treating that query as being only about keyframes is how parallax survives an
+accessibility pass it should not survive.
+
 **The Banner Clearance Rule.** No text may sit on the banner. Not the title, not
 a kicker, not a caption, not a logo, not a scroll cue. The mask makes that ground
 a per-pixel blend of artwork and paper, so contrast over it cannot be guaranteed
 by measurement in either scheme — and a guarantee you cannot measure is not a
-guarantee. The mechanism is deliberately dumb and therefore reliable: `.page` has
-top padding and **no negative margin**, so the column simply begins below the
-banner's box; at 1440 the `<h1>` clears the banner's foot by 36px. An earlier
-build did overlap them and it was wrong. If a future pass wants the title to
+guarantee. The mechanism is deliberately dumb and therefore reliable: the sheet
+begins at `margin-top: var(--banner-h)`, so the column starts below the banner's
+box; at 1440 the `<h1>` clears the banner's foot by 36px. An earlier build did
+overlap them and it was wrong.
+
+Scrolling does bring the content over the banner, and that is not a breach: the
+sheet is opaque, so text riding past the banner is on paper, never on artwork.
+The rule is about what text is *painted on*, not about what is behind it in the
+stacking order. If a future pass wants the title to
 overlap the image, the answer is a different banner treatment — an unmasked band
 with a measured solid ground — not text over the mask.
 
