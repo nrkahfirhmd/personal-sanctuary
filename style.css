@@ -123,22 +123,6 @@ a {
   height: var(--banner-h);
   overflow: hidden;
   background: var(--paper);
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 1) 42%,
-    rgba(0, 0, 0, 0.62) 68%,
-    rgba(0, 0, 0, 0.24) 86%,
-    rgba(0, 0, 0, 0) 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 1) 42%,
-    rgba(0, 0, 0, 0.62) 68%,
-    rgba(0, 0, 0, 0.24) 86%,
-    rgba(0, 0, 0, 0) 100%
-  );
 }
 
 .backdrop__media {
@@ -170,6 +154,28 @@ a {
   z-index: 1;
   margin-top: var(--banner-h);
   background: var(--paper);
+}
+
+/* The dissolve rides on the sheet's leading edge, not on the banner. A mask on
+   a fixed banner cannot move, so it would cut a hard line across the artwork
+   the moment the page scrolled. This travels with the content instead, so the
+   banner is always met by a fade wherever the sheet happens to be. */
+.sheet::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: clamp(4rem, 13vh, 8.5rem);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, var(--paper) 22%, transparent) 34%,
+    color-mix(in srgb, var(--paper) 62%, transparent) 64%,
+    color-mix(in srgb, var(--paper) 88%, transparent) 85%,
+    var(--paper) 100%
+  );
+  pointer-events: none;
 }
 
 .page {

@@ -1,6 +1,6 @@
 ---
 name: Kahfi's Sanctuary
-description: An index of five hobby trackers — a banner that dissolves into near-white paper, one deep green, one type family, numbers and covers as the only ornament.
+description: An index of five hobby trackers — a pinned banner the page dissolves over, one deep green, one type family, numbers and covers as the only ornament.
 colors:
   paper: "#fafaf8"
   ink: "#16161a"
@@ -163,8 +163,9 @@ the profiles they came from.
 
 **Key Characteristics:**
 
-- A full-bleed 16:5 banner, pinned to the viewport and masked to transparent at
-  its foot, with the page sliding over it on an opaque sheet, then one measured
+- A full-bleed 16:5 banner pinned to the viewport, with the page sliding over it
+  on an opaque sheet whose leading edge dissolves into the artwork, then one
+  measured
   column on near-white paper — no grid of cards, no sidebar.
 - Exactly one accent colour, used in eight sanctioned places.
 - One type family (Libre Franklin); hierarchy from size and weight only.
@@ -236,15 +237,15 @@ carry a literal hex. Dark is not an afterthought skin over a light design;
 both schemes are first-class and are the reason the page can be read on a
 phone at any hour.
 
-**The Masked-Not-Scrimmed Rule.** The banner is blended into the page by masking
-the image itself to transparent at its foot — a `linear-gradient` on
-`mask-image` with stops at 42% / 68% / 86% / 100% — never by painting a scrim
-over it. This is the load-bearing decision of the whole banner. A scrim is a
-colour, so it must be re-picked for every scheme and re-checked whenever the
-artwork changes; a mask is an alpha ramp, so the same declaration lands correctly
-on `#fafaf8` and on `#121214` with no dark-mode branch at all. If the banner ever
-needs to blend differently, move the mask stops. Do not add a gradient overlay,
-a tinted `::after`, or a per-theme scrim colour.
+**The Travelling-Edge Rule.** The banner and the page are blended by a gradient on the sheet's leading edge, not by a mask on the banner. The banner itself is a plain rectangle with no mask at all.
+
+This reverses an earlier Masked-Not-Scrimmed Rule, which blended by masking the banner's own alpha and rejected a scrim outright. That rule was right while the banner scrolled with the page: a mask needs no dark-mode branch, a coloured scrim does. It broke the moment the banner was pinned. A mask on a fixed element is stationary by definition, so it blended at one fixed height while the content met the artwork somewhere else entirely — a hard horizontal cut across the picture that moved with every scroll.
+
+The old objection to a scrim does not survive either, because the gradient is built from `var(--paper)` through `color-mix`, so it resolves to near-white on `#fafaf8` and to near-black on `#121214` with no second declaration. The thing that made a scrim a liability was hardcoding its colour, not using one.
+
+The fade lives on `.sheet::before`, sits at `bottom: 100%` so it rides directly above the sheet, and stands `clamp(4rem, 13vh, 8.5rem)` tall. Because it belongs to the sheet, it goes wherever the content goes: the banner is met by a dissolve at every scroll position rather than only at rest. It is `pointer-events: none`, since a decorative band must not eat clicks meant for the banner or the page.
+
+Keep both facts together if either is touched. The blend must travel with the content, and its colour must come from the ground token rather than a literal.
 
 **The Measured-Contrast Rule.** Contrast is verified in both schemes at 1440
 and 390 before shipping, at rest *and* hovering. Every text role clears WCAG
@@ -385,8 +386,9 @@ only `position: fixed` one: pinned to the viewport at `top: 0`, 100% wide, and
 `var(--banner-h)` tall — `min(46vh, calc(100vw * 5 / 16))`, which is 16:5 capped
 so it cannot eat a short viewport. It holds a muted, autoplaying, looping
 `<video>` at `object-fit: cover` with a WebM source, an MP4 fallback and a WebP
-poster frame; its foot is masked to transparent (see The Masked-Not-Scrimmed
-Rule). At 1440 it stands 414px tall; at 390 it stands 122px.
+poster frame. It carries no mask: the dissolve belongs to the sheet that covers
+it (see The Travelling-Edge Rule). At 1440 it stands 414px tall; at 390 it
+stands 122px.
 
 **The sheet.** `.sheet` wraps the whole column, carries `margin-top:
 var(--banner-h)` and the page ground full-bleed, and sits at `z-index: 1` above
@@ -578,9 +580,10 @@ the index — it sets a mood, says nothing, and hands over.
   `--backdrop-poster` on the root element at render time, because the
   reduced-motion still is painted by CSS and the data has to reach it; the CSS
   declaration keeps a hard-coded fallback so the band is never empty.
-- **Blend:** masked, never scrimmed (see The Masked-Not-Scrimmed Rule).
-- **Ground:** `background: var(--paper)` behind the media, so the masked foot
-  fades into the correct colour in either scheme before the video has decoded.
+- **Blend:** a gradient on the sheet's leading edge, so it travels with the
+  content; the banner itself is unmasked (see The Travelling-Edge Rule).
+- **Ground:** `background: var(--paper)` behind the media, so the band shows the
+  correct colour in either scheme before the video has decoded.
 - **Reduced motion:** under `prefers-reduced-motion: reduce` the `<video>` is
   set to `display: none` and the banner shows the poster frame
   (`var(--backdrop-poster)`) as a `center / cover` background image instead. The
@@ -1027,14 +1030,14 @@ palette in scope.
 
 ### Backdrop Banner
 
-The one image on the page: a 16:5 band masked to transparent at its foot so it dissolves into the paper in both schemes without a per-theme scrim. Carries no text, ever. Art by Tilixia Summer, credited in the colophon.
+The one image on the page: a 16:5 band pinned to the viewport, with the content sheet sliding over it. The dissolve is a gradient on the sheet's leading edge, built from the ground token so it resolves in both schemes, and it travels with the content rather than sitting at a fixed height on the banner. Carries no text, ever. Art by Tilixia Summer, credited in the colophon.
 
 ```html
-<div class="ds-backdrop" aria-hidden="true"><div class="ds-backdrop-art"></div></div><div class="ds-backdrop-page"><h1 class="ds-backdrop-h1">Kahfi’s Sanctuary</h1></div>
+<div class="ds-backdrop-frame"><div class="ds-backdrop" aria-hidden="true"><div class="ds-backdrop-art"></div></div><div class="ds-backdrop-sheet"><div class="ds-backdrop-page"><h1 class="ds-backdrop-h1">Kahfi’s Sanctuary</h1><p>Content scrolls up over the band; the band stays put.</p></div></div></div>
 ```
 
 ```css
-:host{--paper:#fafaf8;--ink:#16161a;--muted:#6b6b75;--rule:#e4e3dd;--accent:#2e5e4e;--accent-wash:#eef3f0;--t-micro:0.72rem;--t-small:0.82rem;--t-body:0.95rem;--t-lead:1.1rem;font-family:"Libre Franklin",ui-sans-serif,system-ui,sans-serif;color:var(--ink)}.ds-backdrop{position:relative;width:100%;aspect-ratio:16/5;max-height:46vh;overflow:hidden;background:var(--paper);-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,1) 0%,rgba(0,0,0,1) 42%,rgba(0,0,0,.62) 68%,rgba(0,0,0,.24) 86%,rgba(0,0,0,0) 100%);mask-image:linear-gradient(to bottom,rgba(0,0,0,1) 0%,rgba(0,0,0,1) 42%,rgba(0,0,0,.62) 68%,rgba(0,0,0,.24) 86%,rgba(0,0,0,0) 100%)}.ds-backdrop-art{width:100%;height:100%;background:conic-gradient(from 210deg at 60% 40%,#9fd9d2,#e9b9cd,#cfe4f2,#9fd9d2)}.ds-backdrop-page{padding:36px 2.5rem 2rem}.ds-backdrop-h1{margin:0;max-width:18ch;font-size:clamp(2rem,6.2vw,3.1rem);font-weight:300;line-height:1.12;letter-spacing:-.021em;text-wrap:balance}@media (prefers-reduced-motion:reduce){.ds-backdrop-art{animation:none}}
+:host{--paper:#fafaf8;--ink:#16161a;--muted:#6b6b75;--rule:#e4e3dd;--accent:#2e5e4e;--accent-wash:#eef3f0;--t-micro:0.72rem;--t-small:0.82rem;--t-body:0.95rem;--t-lead:1.1rem;font-family:"Libre Franklin",ui-sans-serif,system-ui,sans-serif;color:var(--ink)}.ds-backdrop-frame{--banner-h:min(46vh,calc(100% * 5 / 16));position:relative;overflow:auto;max-height:70vh;background:var(--paper)}.ds-backdrop{position:sticky;top:0;width:100%;height:var(--banner-h);overflow:hidden;background:var(--paper)}.ds-backdrop-art{width:100%;height:100%;background:conic-gradient(from 210deg at 60% 40%,#9fd9d2,#e9b9cd,#cfe4f2,#9fd9d2)}.ds-backdrop-sheet{position:relative;z-index:1;margin-top:calc(var(--banner-h) * -1);background:var(--paper);min-height:120vh}.ds-backdrop-sheet::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:clamp(4rem,13vh,8.5rem);background:linear-gradient(to bottom,transparent 0%,color-mix(in srgb,var(--paper) 22%,transparent) 34%,color-mix(in srgb,var(--paper) 62%,transparent) 64%,color-mix(in srgb,var(--paper) 88%,transparent) 85%,var(--paper) 100%);pointer-events:none}.ds-backdrop-page{padding:36px 2.5rem 2rem}.ds-backdrop-h1{margin:0;max-width:18ch;font-size:clamp(2rem,6.2vw,3.1rem);font-weight:300;line-height:1.12;letter-spacing:-.021em;text-wrap:balance}@media (prefers-reduced-motion:reduce){.ds-backdrop-art{animation:none}}
 ```
 
 ### Entry Row
