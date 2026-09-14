@@ -8,6 +8,9 @@
     "posters  — max 5 per gateway. Direct image URLs. Fewer is fine; a slot is",
     "           drawn only where there is a cover, and no covers means no strip.",
     "",
+    "photo    — the round portrait above the title. photoAlt is what a screen",
+    "           reader announces. Remove both keys to drop the portrait.",
+    "",
     "backdrop — swap the art by dropping new files in media/ and pointing these",
     "           paths at them. credit is the artist and is shown in the colophon.",
     "",
@@ -19,7 +22,9 @@
     "name": "Kahfi's Sanctuary",
     "title": "Kahfi's Sanctuary",
     "intro": "I enjoy art, a lot.",
-    "byline": "Kept by Kahfi R."
+    "byline": "Kept by Kahfi R.",
+    "photo": "media/avatar.webp",
+    "photoAlt": "Kahfi R."
   },
 
   "backdrop": {

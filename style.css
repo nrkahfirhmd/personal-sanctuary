@@ -163,6 +163,20 @@ a {
 
 /* ---- masthead --------------------------------------------------------- */
 
+/* 1:1 portrait, circle-framed. The hairline ring is the same weight as the
+   rules between entries, so it belongs to the same system. */
+.masthead__photo {
+  display: block;
+  width: clamp(4.5rem, 11vw, 6rem);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  margin: 0 0 1.35rem;
+  border-radius: 50%;
+  object-fit: cover;
+  background: color-mix(in srgb, var(--rule) 45%, var(--paper));
+  box-shadow: 0 0 0 1px var(--rule);
+}
+
 .masthead__title {
   /* Light and large: the only display gesture on the page. There is no eyebrow
      above it; the byline lives in the colophon. */

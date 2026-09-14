@@ -43,6 +43,8 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
 
 <div class="page">
   <header class="masthead">
+    <img class="masthead__photo" id="photo" src="media/avatar.webp" alt="Kahfi R."
+         width="512" height="512" decoding="async">
     <h1 class="masthead__title" id="title">Kahfi&rsquo;s Sanctuary</h1>
     <p class="masthead__note" id="intro"></p>
   </header>
@@ -76,6 +78,9 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
     "posters  — max 5 per gateway. Direct image URLs. Fewer is fine; a slot is",
     "           drawn only where there is a cover, and no covers means no strip.",
     "",
+    "photo    — the round portrait above the title. photoAlt is what a screen",
+    "           reader announces. Remove both keys to drop the portrait.",
+    "",
     "backdrop — swap the art by dropping new files in media/ and pointing these",
     "           paths at them. credit is the artist and is shown in the colophon.",
     "",
@@ -87,7 +92,9 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
     "name": "Kahfi's Sanctuary",
     "title": "Kahfi's Sanctuary",
     "intro": "I enjoy art, a lot.",
-    "byline": "Kept by Kahfi R."
+    "byline": "Kept by Kahfi R.",
+    "photo": "media/avatar.webp",
+    "photoAlt": "Kahfi R."
   },
 
   "backdrop": {
@@ -297,6 +304,19 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
     const site = content.site ?? {};
     if (site.title) document.getElementById('title').textContent = site.title;
     document.getElementById('intro').textContent = site.intro ?? '';
+    // The portrait is optional: removing site.photo drops it rather than
+    // leaving a broken image or an empty circle.
+    const photo = document.getElementById('photo');
+    if (photo) {
+      if (site.photo) {
+        photo.src = site.photo;
+        if (site.photoAlt != null) photo.alt = site.photoAlt;
+        photo.hidden = false;
+      } else {
+        photo.hidden = true;
+      }
+    }
+
     // Writing textContent here would delete any markup inside the byline — the
     // personal-site link among it. A byline that carries its own markup keeps it.
     const byline = document.getElementById('byline');
