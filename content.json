@@ -5,8 +5,8 @@
     "updated  — the date shown under each entry. Bump it when you change numbers.",
     "stats    — max 3 per gateway. Fewer is fine. value is shown large, label small.",
     "           Write value exactly as it should appear, separators included: \"2,324\".",
-    "posters  — max 5 per gateway. Direct image URLs. Fewer is fine; empty slots",
-    "           render as quiet placeholders rather than being hidden.",
+    "posters  — max 5 per gateway. Direct image URLs. Fewer is fine; a slot is",
+    "           drawn only where there is a cover, and no covers means no strip.",
     "",
     "backdrop — swap the art by dropping new files in media/ and pointing these",
     "           paths at them. credit is the artist and is shown in the colophon.",
@@ -32,54 +32,6 @@
 
   "gateways": [
     {
-      "hobby": "Anime & Manga",
-      "name": "AniList",
-      "username": "Sakyta",
-      "url": "https://anilist.co/user/Sakyta/",
-      "updated": "2026-09-12",
-      "stats": [
-        { "value": "135", "label": "anime" },
-        { "value": "81", "label": "manga" },
-        { "value": "85,25", "label": "mean score" }
-      ],
-      "posters": []
-    },
-    {
-      "hobby": "TV Series",
-      "name": "Serializd",
-      "username": "Sakyta",
-      "url": "https://serializd.com/user/Sakyta/profile",
-      "updated": null,
-      "stats": [
-        { "value": "6", "label": "shows" },
-        { "value": "185", "label": "episodes" },
-        { "value": "3d 19h", "label": "time spent" }
-      ],
-      "posters": []
-    },
-    {
-      "hobby": "Books",
-      "name": "StoryGraph",
-      "username": "Firanda",
-      "url": "https://app.thestorygraph.com/profile/firanda",
-      "updated": null,
-      "stats": [
-        { "value": "6", "label": "books" }
-      ],
-      "posters": []
-    },
-    {
-      "hobby": "Films",
-      "name": "Letterboxd",
-      "username": "Firanda",
-      "url": "https://letterboxd.com/firanda/",
-      "updated": "2026-09-12",
-      "stats": [
-        { "value": "110", "label": "films" }
-      ],
-      "posters": []
-    },
-    {
       "hobby": "Games",
       "name": "Backloggd",
       "username": "Firanda",
@@ -96,6 +48,78 @@
         "https://images.igdb.com/igdb/image/upload/t_cover_big/co44mb.jpg",
         "https://images.igdb.com/igdb/image/upload/t_cover_big/cob8gm.jpg",
         "https://images.igdb.com/igdb/image/upload/t_cover_big/co87df.jpg"
+      ]
+    },
+    {
+      "hobby": "Films",
+      "name": "Letterboxd",
+      "username": "Firanda",
+      "url": "https://letterboxd.com/firanda/",
+      "updated": "2026-09-14",
+      "stats": [
+        { "value": "110", "label": "films" }
+      ],
+      "posters": [
+        "https://a.ltrbxd.com/resized/film-poster/1/2/5/5/3/9/4/1255394-the-odyssey-2026-0-2000-0-3000-crop.jpg?v=1eed046d0c",
+        "https://a.ltrbxd.com/resized/film-poster/2/5/1/9/4/3/251943-spider-man-into-the-spider-verse-0-2000-0-3000-crop.jpg?v=538fe0ada6",
+        "https://a.ltrbxd.com/resized/film-poster/1/8/8/9/9/3/188993-stand-by-me-doraemon-0-2000-0-3000-crop.jpg?v=28d5e93a9b",
+        "https://a.ltrbxd.com/resized/film-poster/1/1/8/2/1/2/118212-miracle-in-cell-no-7-0-2000-0-3000-crop.jpg?v=b387382c87",
+        "https://a.ltrbxd.com/resized/film-poster/4/6/9/8/6/46986-the-fast-and-the-furious-tokyo-drift-0-2000-0-3000-crop.jpg?v=d90305bf54"
+      ]
+    },
+    {
+      "hobby": "Anime & Manga",
+      "name": "AniList",
+      "username": "Sakyta",
+      "url": "https://anilist.co/user/Sakyta/",
+      "updated": "2026-09-14",
+      "stats": [
+        { "value": "135", "label": "anime" },
+        { "value": "81", "label": "manga" },
+        { "value": "85,25", "label": "mean score" }
+      ],
+      "posters": [
+        "https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx30051-5KJyPlO7z5F4.png",
+        "https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx100568-4BC0PsdwU4bL.png",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21170-kbcfTTZGSaFt.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx5114-nSWCgQlmOMtj.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx11061-y5gsT1hoHuHw.png"
+      ]
+    },
+    {
+      "hobby": "TV Series",
+      "name": "Serializd",
+      "username": "Sakyta",
+      "url": "https://serializd.com/user/Sakyta/profile",
+      "updated": "2026-09-14",
+      "stats": [
+        { "value": "6", "label": "shows" },
+        { "value": "185", "label": "episodes" },
+        { "value": "3d 19h", "label": "time spent" }
+      ],
+      "posters": [
+        "https://image.tmdb.org/t/p/original/5Sd01WeraL2oA3Vv6O4rcRxockn.jpg",
+        "https://image.tmdb.org/t/p/original/Ac8ruycRXzgcsndTZFK6ouGA0FA.jpg",
+        "https://image.tmdb.org/t/p/w500/hxJQ3A2wtreuWDnVBbzzXI3YlOE.jpg",
+        "https://image.tmdb.org/t/p/w500/qwi3p6PzKfQZ4YXBzv3CP5pO2dE.jpg",
+        "https://image.tmdb.org/t/p/w500/yaGt4GIutpbXHsv48tWceWg6s56.jpg"
+      ]
+    },
+    {
+      "hobby": "Books",
+      "name": "StoryGraph",
+      "username": "Firanda",
+      "url": "https://app.thestorygraph.com/profile/firanda",
+      "updated": "2026-09-14",
+      "stats": [
+        { "value": "6", "label": "books" }
+      ],
+      "posters": [
+        "https://cdn.thestorygraph.com/dw3kplcvnxx4211vligi43atje37",
+        "https://cdn.thestorygraph.com/1n47wbvwk0jahxp5080cj37ptgep",
+        "https://cdn.thestorygraph.com/gag3vj8cumkgteczndd4xzomhp6m",
+        "https://cdn.thestorygraph.com/7xghd3ahjv3v1bjtvqtcvigpj4qu",
+        "https://cdn.thestorygraph.com/wqy5yqmqt7p0bq8ub0wz2ge0yg70"
       ]
     }
   ]

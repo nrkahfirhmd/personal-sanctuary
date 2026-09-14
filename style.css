@@ -325,7 +325,9 @@ a {
 .poster {
   aspect-ratio: 2 / 3;
   overflow: hidden;
-  background: var(--rule);
+  /* Holds the slot's space while the cover loads, without reading as the
+     placeholder plate the page deliberately does not draw. */
+  background: color-mix(in srgb, var(--rule) 45%, var(--paper));
   border-radius: 2px;
 }
 

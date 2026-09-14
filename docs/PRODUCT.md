@@ -32,7 +32,7 @@ Read in a browser tab, usually on a phone, usually once, usually because someone
 - `content.json` is the single hand-edited source: site copy, backdrop paths, and every gateway with its stats and posters. Nothing else needs touching to change what the page says.
 - Each gateway carries **at most 3 stats** and **exactly 5 poster slots**, plus its own `updated` ISO date. Both caps are uniform across entries; fewer is allowed, more is truncated by the page.
 - A stat is a `{ value, label }` pair, kept apart so the page can set the number and what it counts at different sizes. Values are display-ready strings (`"2,324"`, `"85.9"`) already carrying their separators — the page typesets them and never formats or computes.
-- Posters are direct image URLs on the trackers' own CDNs. An unfilled slot renders as a quiet plate rather than collapsing, so the row keeps its rhythm at one cover or none. A URL that fails to load falls back to the same plate.
+- Posters are direct image URLs on the trackers' own CDNs. A slot is drawn only where there is a cover, and a gateway with none renders no strip. A URL that fails to load removes its own slot rather than leaving a box.
 - `index.html` fetches `content.json` at load, with a baked copy inside the page for `file://` opening. No server-side rendering, no client-side build step.
 - Adding a gateway means one object in `content.json`; the page renders it without markup changes. The design must survive 4 gateways or 8 without being rebuilt.
 - A 16:5 banner sits above the page, masked to transparent at its foot. No text may sit on it: the mask makes that ground a per-pixel blend of image and paper, so contrast there cannot be guaranteed.

@@ -29,9 +29,10 @@ node scripts/bake.mjs
 That copies your content into the page's offline fallback block, so the page
 still reads when it is opened straight off the disk.
 
-Each gateway takes **at most 3 stats** and **5 poster slots**. Fewer is fine —
-empty poster slots render as quiet plates rather than collapsing, so every row
-keeps the same rhythm. Bump that gateway's `updated` date when you change its
+Each gateway takes **at most 3 stats** and **up to 5 posters**. Fewer is fine — a
+slot is drawn only where there is a cover, and a gateway with no covers shows no
+strip at all. The grid keeps five columns either way, so a cover is the same size
+in every entry. Bump that gateway's `updated` date when you change its
 numbers; the page shows it, and says plainly that the numbers are as current as
 the last time you sat down with them.
 

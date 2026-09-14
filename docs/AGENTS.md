@@ -41,7 +41,7 @@ docs/AGENTS.md             # this file
      ]
    }
    ```
-2. `index.html` fetches `content.json` on load and renders one row per gateway: name and handle, up to **3 stats** in a shared column grid, and **5 poster slots**. Both caps are uniform across entries. An unfilled poster slot renders as a quiet plate rather than collapsing.
+2. `index.html` fetches `content.json` on load and renders one row per gateway: name and handle, up to **3 stats** in a shared column grid, and **up to 5 posters**. Both caps are uniform across entries. A slot is drawn only where there is a cover; a gateway with none renders no strip, and the grid keeps five columns so a cover is the same size everywhere.
 3. The page also carries a baked copy of `content.json` in a `<script type="application/json" id="baked-data">` block, used only when the fetch fails — which is what happens on a `file://` origin. Run `node scripts/bake.mjs` after editing content to refresh it.
 4. Numbers are read off the profiles and typed in. That is the whole update loop — there is nothing to run but `bake.mjs`.
 
