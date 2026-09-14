@@ -394,9 +394,23 @@ computes its own `max-width` from the two
 **no negative top margin**: the column starts below the banner's box, never
 inside it.
 
-The masthead is two stacked blocks — the title, then the standfirst `1.4rem`
-below it. The title carries `margin: 0` and opens the page directly; nothing
-precedes it. The list then begins after `clamp(2.75rem, 8vh, 4.5rem)` of air.
+The masthead is a flex row: a round portrait, then a text column holding the
+title and the standfirst `0.55rem` below it. The portrait is `flex: none` at
+`clamp(3.75rem, 9vw, 5.5rem)`, square by `aspect-ratio: 1 / 1`, circled by
+`border-radius: 50%`, cropped by `object-fit: cover`, and ringed by a 1px
+`--rule` shadow — the same hairline weight as the rules between entries, which
+is what keeps it inside the system rather than reading as an applied avatar
+style. `align-items: center` sets it against the middle of the two text lines;
+the text column takes `min-width: 0` so long copy wraps instead of forcing
+overflow. Below `34rem` the row becomes a column at `align-items: flex-start`,
+because side by side the title had to share a 350px line with a 60px circle.
+
+The portrait is the one element above the h1, and it is not an exception to the
+no-eyebrow ban: that ban is on *tracked-caps text* standing in for a heading.
+An image is not a kicker. Nothing textual precedes the title. The portrait is
+also optional — dropping `site.photo` from `content.json` removes it rather
+than leaving an empty circle. The title carries `margin: 0`, and the list begins
+after `clamp(2.75rem, 8vh, 4.5rem)` of air.
 
 **The entry.** Each entry is a grid at `minmax(0, 7fr) minmax(0, 12fr)` with a
 `1.4rem 2rem` gap and `align-items: start`: identity on the left (hobby name,
@@ -1093,12 +1107,12 @@ Parked off-screen, slides into view on keyboard focus. Accent ground, paper text
 
 ### Masthead
 
-Title and standfirst, opening the page directly below the banner. Nothing sits above the h1 — no eyebrow, no kicker, no byline.
+A round portrait beside the title and standfirst, opening the page directly below the banner. No text sits above the h1 — no eyebrow, no kicker, no byline. Stacks to a column below 34rem.
 
 ```html
-<header class="ds-masthead"><h1 class="ds-masthead-title">Kahfi’s Sanctuary</h1><p class="ds-masthead-note">What I’m watching, reading and playing — five profiles I actually keep up to date, with the numbers on each one.</p></header>
+<header class="ds-masthead"><img class="ds-masthead-photo" src="avatar.webp" alt="Kahfi R." width="512" height="512" decoding="async"><div><h1 class="ds-masthead-title">Kahfi’s Sanctuary</h1><p class="ds-masthead-note">I enjoy art, a lot.</p></div></header>
 ```
 
 ```css
-:host{--paper:#fafaf8;--ink:#16161a;--muted:#6b6b75;--rule:#e4e3dd;--accent:#2e5e4e;--accent-wash:#eef3f0;--t-micro:0.72rem;--t-small:0.82rem;--t-body:0.95rem;--t-lead:1.1rem;font-family:"Libre Franklin",ui-sans-serif,system-ui,sans-serif;color:var(--ink)}.ds-masthead-title{margin:0;max-width:18ch;font-size:clamp(2rem,6.2vw,3.1rem);font-weight:300;line-height:1.12;letter-spacing:-.021em;text-wrap:balance}.ds-masthead-note{margin:1.4rem 0 0;max-width:54ch;font-size:var(--t-body);color:var(--muted)}
+:host{--paper:#fafaf8;--ink:#16161a;--muted:#6b6b75;--rule:#e4e3dd;--accent:#2e5e4e;--accent-wash:#eef3f0;--t-micro:0.72rem;--t-small:0.82rem;--t-body:0.95rem;--t-lead:1.1rem;font-family:"Libre Franklin",ui-sans-serif,system-ui,sans-serif;color:var(--ink)}.ds-masthead{display:flex;align-items:center;gap:clamp(.9rem,2.6vw,1.6rem)}.ds-masthead>div{min-width:0}.ds-masthead-photo{display:block;flex:none;width:clamp(3.75rem,9vw,5.5rem);height:auto;aspect-ratio:1/1;margin:0;border-radius:50%;object-fit:cover;background:color-mix(in srgb,var(--rule) 45%,var(--paper));box-shadow:0 0 0 1px var(--rule)}.ds-masthead-title{margin:0;max-width:18ch;font-size:clamp(2rem,6.2vw,3.1rem);font-weight:300;line-height:1.12;letter-spacing:-.021em;text-wrap:balance}.ds-masthead-note{margin:.55rem 0 0;max-width:54ch;font-size:var(--t-body);color:var(--muted)}@media (max-width:34rem){.ds-masthead{flex-direction:column;align-items:flex-start;gap:.95rem}}
 ```

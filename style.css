@@ -163,14 +163,26 @@ a {
 
 /* ---- masthead --------------------------------------------------------- */
 
+/* Portrait beside the name, not above it. */
+.masthead {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.9rem, 2.6vw, 1.6rem);
+}
+
+.masthead__text {
+  min-width: 0;
+}
+
 /* 1:1 portrait, circle-framed. The hairline ring is the same weight as the
    rules between entries, so it belongs to the same system. */
 .masthead__photo {
   display: block;
-  width: clamp(4.5rem, 11vw, 6rem);
+  flex: none;
+  width: clamp(3.75rem, 9vw, 5.5rem);
   height: auto;
   aspect-ratio: 1 / 1;
-  margin: 0 0 1.35rem;
+  margin: 0;
   border-radius: 50%;
   object-fit: cover;
   background: color-mix(in srgb, var(--rule) 45%, var(--paper));
@@ -190,7 +202,7 @@ a {
 }
 
 .masthead__note {
-  margin: 1.4rem 0 0;
+  margin: 0.55rem 0 0;
   max-width: 54ch;
   font-size: var(--t-body);
   color: var(--muted);
@@ -415,6 +427,15 @@ a {
 }
 
 @media (max-width: 34rem) {
+  /* The portrait stacks above the name on a phone. Side by side, the title had
+     to share a 350px line with a 60px circle, which cost it more than the
+     pairing was worth. */
+  .masthead {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.95rem;
+  }
+
   .entry__link {
     grid-template-columns: minmax(0, 1fr);
     gap: 1.15rem;
