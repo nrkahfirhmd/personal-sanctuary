@@ -81,6 +81,8 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
     "           Write value exactly as it should appear, separators included: \"2,324\".",
     "posters  — max 5 per gateway. Direct image URLs. Fewer is fine; a slot is",
     "           drawn only where there is a cover, and no covers means no strip.",
+    "           ORDER MATTERS: the first one is what you are on right now, and",
+    "           the page rings it. Put the current one first.",
     "",
     "photo    — the round portrait above the title. photoAlt is what a screen",
     "           reader announces. Remove both keys to drop the portrait.",
@@ -271,6 +273,16 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
     // holding a placeholder, and an entry with no covers gets no strip at all.
     if (posters.length) {
       const strip = el('ul', 'posters');
+
+      // The leftmost cover is what is being consumed right now. The ring that
+      // says so is a colour, so the same fact is carried in text for anyone who
+      // cannot see it.
+      const markCurrent = () => {
+        for (const tag of strip.querySelectorAll('.poster__now')) tag.remove();
+        const first = strip.firstElementChild;
+        if (first) first.append(el('span', 'poster__now sr-only', 'Currently'));
+      };
+
       for (const url of posters) {
         const slot = el('li', 'poster');
         const img = el('img', 'poster__img');
@@ -279,11 +291,18 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
         img.loading = 'lazy';
         img.decoding = 'async';
         // A cover that will not load takes its slot with it, rather than
-        // leaving a broken-image glyph or an empty box in the strip.
-        img.addEventListener('error', () => slot.remove(), { once: true });
+        // leaving a broken-image glyph or an empty box in the strip. If it was
+        // the leading one, the mark moves to whatever is leftmost now.
+        img.addEventListener('error', () => {
+          const wasFirst = slot === strip.firstElementChild;
+          slot.remove();
+          if (wasFirst) markCurrent();
+        }, { once: true });
         slot.append(img);
         strip.append(slot);
       }
+
+      markCurrent();
       link.append(strip);
     }
 

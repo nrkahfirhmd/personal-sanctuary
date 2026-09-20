@@ -7,6 +7,8 @@
     "           Write value exactly as it should appear, separators included: \"2,324\".",
     "posters  — max 5 per gateway. Direct image URLs. Fewer is fine; a slot is",
     "           drawn only where there is a cover, and no covers means no strip.",
+    "           ORDER MATTERS: the first one is what you are on right now, and",
+    "           the page rings it. Put the current one first.",
     "",
     "photo    — the round portrait above the title. photoAlt is what a screen",
     "           reader announces. Remove both keys to drop the portrait.",

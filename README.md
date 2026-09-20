@@ -36,6 +36,9 @@ in every entry. Bump that gateway's `updated` date when you change its
 numbers; the page shows it, and says plainly that the numbers are as current as
 the last time you sat down with them.
 
+Poster order matters: **the first cover is what you are on right now**, and the
+page rings it with a lit stroke. Put the current one first.
+
 A gateway with nothing typed in yet renders blank and says so, rather than
 showing a zero it never measured. For poster URLs, open the tracker and copy the
 cover image address.

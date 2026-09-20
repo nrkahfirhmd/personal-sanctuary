@@ -705,6 +705,30 @@ A reader who knows the show sees it before they read the number.
   causes, on purpose: in both, the cover is not there and the page says so by
   showing nothing.
 
+**The Current-Cover Rule.** The leftmost cover in a strip is what is being
+consumed right now, and it carries a lit ring to say so. Order in `content.json`
+is therefore meaningful, not cosmetic: the first poster is a claim about the
+present, and reordering the array changes what the page asserts.
+
+The ring is a colour, so the same fact is also carried in text. Each strip's
+leading slot holds a visually hidden "Currently", which moves to the new leftmost
+slot if a cover fails to load and its slot is removed. Marking state by colour
+alone would put the one piece of live information on the page out of reach of
+anyone who cannot see it.
+
+It uses `--glow-rgb`, not `--accent`. A glow has to read as emission, and the
+deep green accent cannot do that on paper — on a light ground it reads as a
+shadow, which says "recessed" rather than "live". `--glow-rgb` is the accent's
+own hue at higher chroma, `oklch(62% 0.12 169.6)` in light; in dark the accent
+already emits and the two are the same value. This is a sanctioned addition to
+the one-accent palette, not a second accent: it has exactly one use, and any
+other use of it is a change to the system.
+
+The ring sits outside the slot rather than inset, because the covers are
+full-bleed artwork and an inset stroke would crop them. It does not pulse. The
+page spends its one authored motion moment on the entry hover, and a permanent
+animation in a list of five strips would compete with everything.
+
 **The No-Placeholder Rule.** A poster slot is drawn only when there is a cover to put in it. An entry with no covers renders no strip at all, and a cover that fails to load takes its slot with it rather than leaving a box. The strip keeps five columns whatever it holds, so a poster is the same size in every entry and a partly-filled row simply ends early instead of stretching its covers.
 
 This reverses an earlier Empty Plate Rule, which drew a quiet plate for every unfilled slot on the argument that a fixed silhouette keeps the list's rhythm. That argument held while most entries had covers. Once most did not, twenty plates were louder than the ten real covers and described nothing: a plate for an absent cover is chrome standing in for content, which the page refuses everywhere else. The rhythm is carried by the shared stat grid and the hairline rules, which do not depend on the posters at all.

@@ -11,6 +11,11 @@
   --muted: #6b6b75;
   --rule: #e4e3dd;
   --accent: #2e5e4e;
+  --accent-rgb: 46 94 78;
+  /* The glow only. Same hue as the accent at higher chroma: a deep green
+     cannot read as emission on paper, it reads as a shadow. oklch(62% .12 169.6)
+     in light, and the accent itself in dark, where it already emits. */
+  --glow-rgb: 18 157 122;
   --accent-wash: #eef3f0;
 
   /* Type ramp: two fluid display roles (the headline and the stat value) plus
@@ -41,6 +46,8 @@
     --muted: #9a9aa4;
     --rule: #2a2a2e;
     --accent: #7fc4a8;
+    --accent-rgb: 127 196 168;
+    --glow-rgb: 127 196 168;
     --accent-wash: #1a2320;
   }
 }
@@ -405,6 +412,17 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* The leftmost cover is what is on right now, so it carries a lit ring. The
+   ring sits outside the slot rather than inset, because the covers are
+   full-bleed artwork and an inset stroke would crop them. Static, not pulsing:
+   the page spends its one motion moment on the entry hover. */
+.poster:first-child {
+  box-shadow:
+    0 0 0 2px rgb(var(--glow-rgb)),
+    0 0 12px 2px rgb(var(--glow-rgb) / 0.62),
+    0 0 26px 7px rgb(var(--glow-rgb) / 0.3);
 }
 
 /* ---- states ----------------------------------------------------------- */
