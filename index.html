@@ -294,9 +294,22 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
       // who cannot see it.
       const markCurrent = () => {
         if (!isCurrent) return;
-        for (const tag of strip.querySelectorAll('.poster__now')) tag.remove();
+        for (const tag of strip.querySelectorAll('.poster__now, .poster__badge')) tag.remove();
         const first = strip.firstElementChild;
-        if (first) first.append(el('span', 'poster__now sr-only', 'Currently'));
+        if (!first) return;
+        first.append(el('span', 'poster__now sr-only', 'Currently'));
+        // Drawn, not an emoji or a glyph, and decorative: the hidden label above
+        // is what carries the meaning to anyone not seeing the chip.
+        const badge = el('span', 'poster__badge');
+        badge.setAttribute('aria-hidden', 'true');
+        badge.innerHTML =
+          '<svg viewBox="0 0 24 24" focusable="false">' +
+          '<circle class="poster__badge-face" cx="12" cy="12" r="11"/>' +
+          '<circle class="poster__badge-mark" cx="12" cy="12" r="3.1"/>' +
+          '<path class="poster__badge-wave" d="M16.9 7.6a6.2 6.2 0 0 1 0 8.8"/>' +
+          '<path class="poster__badge-wave" d="M7.1 16.4a6.2 6.2 0 0 1 0-8.8"/>' +
+          '</svg>';
+        first.append(badge);
       };
 
       for (const url of posters) {

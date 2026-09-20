@@ -399,8 +399,8 @@ a {
 }
 
 .poster {
+  position: relative;
   aspect-ratio: 2 / 3;
-  overflow: hidden;
   /* Holds the slot's space while the cover loads, without reading as the
      placeholder plate the page deliberately does not draw. */
   background: color-mix(in srgb, var(--rule) 45%, var(--paper));
@@ -412,6 +412,43 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* The slot used to clip this; it cannot any more, so the image rounds itself. */
+  border-radius: inherit;
+}
+
+/* Sits half on the artwork and half above it, centred on the slot's top edge. */
+.poster__badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 2;
+  width: clamp(1.05rem, 1.5vw, 1.35rem);
+  transform: translate(-50%, -50%);
+  line-height: 0;
+  pointer-events: none;
+}
+
+.poster__badge svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.poster__badge-face {
+  fill: rgb(var(--glow-rgb));
+  stroke: var(--paper);
+  stroke-width: 1.6;
+}
+
+.poster__badge-mark {
+  fill: var(--paper);
+}
+
+.poster__badge-wave {
+  fill: none;
+  stroke: var(--paper);
+  stroke-width: 1.7;
+  stroke-linecap: round;
 }
 
 /* Only a strip that claims the present gets the ring. Without it the strip is

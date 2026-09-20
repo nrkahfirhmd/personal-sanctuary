@@ -738,6 +738,22 @@ full-bleed artwork and an inset stroke would crop them. It does not pulse. The
 page spends its one authored motion moment on the entry hover, and a permanent
 animation in a list of five strips would compete with everything.
 
+A chip rides the ringed slot's top edge, centred, half on the artwork and half
+above it. It is drawn as SVG — a dot between two arcs, the broadcast mark for
+*on now* — in the same `--glow-rgb`, outlined in `--paper` so it separates from
+whatever artwork is behind it. It is `aria-hidden` and `pointer-events: none`:
+the hidden "Currently" already carries the meaning, and a decorative mark must
+not intercept the click meant for the entry.
+
+**The slot cannot clip.** `.poster` used to carry `overflow: hidden` to round its
+image; that would cut off exactly the half of the chip meant to sit above the
+edge. The image now rounds itself with `border-radius: inherit` and the slot
+clips nothing. Restoring `overflow: hidden` there silently beheads the chip.
+
+The chip's overhang is half its own size — 11px at 1440, 8px below that — and the
+entry grid's `1.4rem` row gap absorbs it, so it never reaches the date line above.
+Growing the chip without checking that gap is how it would start colliding.
+
 **The No-Placeholder Rule.** A poster slot is drawn only when there is a cover to put in it. An entry with no covers renders no strip at all, and a cover that fails to load takes its slot with it rather than leaving a box. The strip keeps five columns whatever it holds, so a poster is the same size in every entry and a partly-filled row simply ends early instead of stretching its covers.
 
 This reverses an earlier Empty Plate Rule, which drew a quiet plate for every unfilled slot on the argument that a fixed silhouette keeps the list's rhythm. That argument held while most entries had covers. Once most did not, twenty plates were louder than the ten real covers and described nothing: a plate for an absent cover is chrome standing in for content, which the page refuses everywhere else. The rhythm is carried by the shared stat grid and the hairline rules, which do not depend on the posters at all.
