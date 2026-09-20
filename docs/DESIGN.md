@@ -705,14 +705,23 @@ A reader who knows the show sees it before they read the number.
   causes, on purpose: in both, the cover is not there and the page says so by
   showing nothing.
 
-**The Current-Cover Rule.** The leftmost cover in a strip is what is being
-consumed right now, and it carries a lit ring to say so. Order in `content.json`
-is therefore meaningful, not cosmetic: the first poster is a claim about the
-present, and reordering the array changes what the page asserts.
+**The Current-Cover Rule.** A strip makes one of two statements, and `current`
+in `content.json` decides which. With `current: true` the leftmost cover is what
+is being consumed right now and carries a lit ring to say so; order is then
+meaningful, not cosmetic, and reordering the array changes what the page
+asserts. With `current: false` the strip is favourites, nothing is ringed, and
+no claim about the present is made at all.
 
-The ring is a colour, so the same fact is also carried in text. Each strip's
-leading slot holds a visually hidden "Currently", which moves to the new leftmost
-slot if a cover fails to load and its slot is removed. Marking state by colour
+**A missing `current` means false.** The ring is an assertion about this moment,
+and an entry that forgot to say anything must not be made to say it. Defaulting
+the other way would let a gateway added a year from now silently claim its first
+cover is playing tonight. The weaker statement is the safe default; the stronger
+one has to be typed.
+
+The ring is a colour, so the same fact is also carried in text. A current
+strip's leading slot holds a visually hidden "Currently", which moves to the new
+leftmost slot if a cover fails to load and its slot is removed. A favourites
+strip carries no label, because the absence of the claim is the information. Marking state by colour
 alone would put the one piece of live information on the page out of reach of
 anyone who cannot see it.
 

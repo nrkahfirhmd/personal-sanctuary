@@ -81,8 +81,13 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
     "           Write value exactly as it should appear, separators included: \"2,324\".",
     "posters  — max 5 per gateway. Direct image URLs. Fewer is fine; a slot is",
     "           drawn only where there is a cover, and no covers means no strip.",
-    "           ORDER MATTERS: the first one is what you are on right now, and",
-    "           the page rings it. Put the current one first.",
+    "           ORDER MATTERS when current is true: the first one is what you",
+    "           are on right now, and the page rings it. Put it first.",
+    "",
+    "current  — true  = the first poster is what you are consuming now, ringed.",
+    "           false = the posters are just favourites, nothing is ringed.",
+    "           Leaving it out means false: the ring is a claim about the",
+    "           present and is never made on your behalf.",
     "",
     "photo    — the round portrait above the title. photoAlt is what a screen",
     "           reader announces. Remove both keys to drop the portrait.",
@@ -118,6 +123,7 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
       "username": "Firanda",
       "url": "https://backloggd.com/u/Firanda/",
       "updated": "2026-09-12",
+      "current": true,
       "stats": [
         { "value": "27", "label": "games 100%" },
         { "value": "2150+", "label": "hours playing" },
@@ -137,6 +143,7 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
       "username": "Firanda",
       "url": "https://letterboxd.com/firanda/",
       "updated": "2026-09-14",
+      "current": true,
       "stats": [
         { "value": "110", "label": "films" }
       ],
@@ -154,6 +161,7 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
       "username": "Sakyta",
       "url": "https://anilist.co/user/Sakyta/",
       "updated": "2026-09-14",
+      "current": true,
       "stats": [
         { "value": "135", "label": "anime" },
         { "value": "81", "label": "manga" },
@@ -173,6 +181,7 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
       "username": "Sakyta",
       "url": "https://serializd.com/user/Sakyta/profile",
       "updated": "2026-09-14",
+      "current": true,
       "stats": [
         { "value": "6", "label": "shows" },
         { "value": "185", "label": "episodes" },
@@ -192,6 +201,7 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
       "username": "Firanda",
       "url": "https://app.thestorygraph.com/profile/firanda",
       "updated": "2026-09-14",
+      "current": true,
       "stats": [
         { "value": "6", "label": "books" }
       ],
@@ -274,10 +284,16 @@ NUMBERS: hand-kept in content.json. The page never claims they are live.
     if (posters.length) {
       const strip = el('ul', 'posters');
 
-      // The leftmost cover is what is being consumed right now. The ring that
-      // says so is a colour, so the same fact is carried in text for anyone who
-      // cannot see it.
+      // The ring is a claim about right now, so it is only made when the entry
+      // says so. Without `current: true` the strip is just favourites and
+      // asserts nothing — a missing field must never speak for the present.
+      const isCurrent = entry.current === true;
+      if (isCurrent) strip.classList.add('posters--current');
+
+      // The ring is a colour, so the same fact is carried in text for anyone
+      // who cannot see it.
       const markCurrent = () => {
+        if (!isCurrent) return;
         for (const tag of strip.querySelectorAll('.poster__now')) tag.remove();
         const first = strip.firstElementChild;
         if (first) first.append(el('span', 'poster__now sr-only', 'Currently'));

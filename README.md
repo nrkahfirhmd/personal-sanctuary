@@ -36,8 +36,11 @@ in every entry. Bump that gateway's `updated` date when you change its
 numbers; the page shows it, and says plainly that the numbers are as current as
 the last time you sat down with them.
 
-Poster order matters: **the first cover is what you are on right now**, and the
-page rings it with a lit stroke. Put the current one first.
+Set **`"current": true`** on a gateway when the first poster is what you are
+consuming right now — the page rings it with a lit stroke, so put that one
+first. Set it to `false`, or leave it out, and the posters are simply favourites
+with nothing ringed. Leaving it out means `false`: the ring is a claim about the
+present, so it is never made on your behalf.
 
 A gateway with nothing typed in yet renders blank and says so, rather than
 showing a zero it never measured. For poster URLs, open the tracker and copy the

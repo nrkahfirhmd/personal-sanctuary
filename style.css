@@ -414,11 +414,12 @@ a {
   object-fit: cover;
 }
 
-/* The leftmost cover is what is on right now, so it carries a lit ring. The
-   ring sits outside the slot rather than inset, because the covers are
-   full-bleed artwork and an inset stroke would crop them. Static, not pulsing:
-   the page spends its one motion moment on the entry hover. */
-.poster:first-child {
+/* Only a strip that claims the present gets the ring. Without it the strip is
+   favourites, and favourites assert nothing about right now. The ring sits
+   outside the slot rather than inset, because the covers are full-bleed artwork
+   and an inset stroke would crop them. Static, not pulsing: the page spends its
+   one motion moment on the entry hover. */
+.posters--current .poster:first-child {
   box-shadow:
     0 0 0 2px rgb(var(--glow-rgb)),
     0 0 12px 2px rgb(var(--glow-rgb) / 0.62),

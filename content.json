@@ -7,8 +7,13 @@
     "           Write value exactly as it should appear, separators included: \"2,324\".",
     "posters  — max 5 per gateway. Direct image URLs. Fewer is fine; a slot is",
     "           drawn only where there is a cover, and no covers means no strip.",
-    "           ORDER MATTERS: the first one is what you are on right now, and",
-    "           the page rings it. Put the current one first.",
+    "           ORDER MATTERS when current is true: the first one is what you",
+    "           are on right now, and the page rings it. Put it first.",
+    "",
+    "current  — true  = the first poster is what you are consuming now, ringed.",
+    "           false = the posters are just favourites, nothing is ringed.",
+    "           Leaving it out means false: the ring is a claim about the",
+    "           present and is never made on your behalf.",
     "",
     "photo    — the round portrait above the title. photoAlt is what a screen",
     "           reader announces. Remove both keys to drop the portrait.",
@@ -44,6 +49,7 @@
       "username": "Firanda",
       "url": "https://backloggd.com/u/Firanda/",
       "updated": "2026-09-12",
+      "current": true,
       "stats": [
         { "value": "27", "label": "games 100%" },
         { "value": "2150+", "label": "hours playing" },
@@ -63,6 +69,7 @@
       "username": "Firanda",
       "url": "https://letterboxd.com/firanda/",
       "updated": "2026-09-14",
+      "current": true,
       "stats": [
         { "value": "110", "label": "films" }
       ],
@@ -80,6 +87,7 @@
       "username": "Sakyta",
       "url": "https://anilist.co/user/Sakyta/",
       "updated": "2026-09-14",
+      "current": true,
       "stats": [
         { "value": "135", "label": "anime" },
         { "value": "81", "label": "manga" },
@@ -99,6 +107,7 @@
       "username": "Sakyta",
       "url": "https://serializd.com/user/Sakyta/profile",
       "updated": "2026-09-14",
+      "current": true,
       "stats": [
         { "value": "6", "label": "shows" },
         { "value": "185", "label": "episodes" },
@@ -118,6 +127,7 @@
       "username": "Firanda",
       "url": "https://app.thestorygraph.com/profile/firanda",
       "updated": "2026-09-14",
+      "current": true,
       "stats": [
         { "value": "6", "label": "books" }
       ],
